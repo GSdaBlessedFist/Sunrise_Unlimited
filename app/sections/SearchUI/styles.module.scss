@@ -1,0 +1,6 @@
+@import "../../../mixins.scss";
+
+.searchUI{
+    @apply  w-full h-full text-xl ;
+    @include b();
+}
