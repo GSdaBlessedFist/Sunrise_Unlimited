@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sunrise Unlimited
 
-## Getting Started
+This project aims to create a dynamic 3D online marketplace where businesses can set up virtual storefronts and interact with customers in a unique and immersive environment. The platform will feature:
 
-First, run the development server:
+- **Customizable Storefronts**: Businesses can design and personalize their storefronts to match their brand identity.
+- **Interactive Experiences**: Offer interactive features like virtual product try-ons, demonstrations, and personalized recommendations.
+- **Community Building**: Foster a community of businesses and customers through social features, events, and networking opportunities.
+- **Monetization Options**: Provide various monetization options for businesses, such as storefront rentals, advertising, and revenue sharing.
+Key Technologies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Frontend**: React Three Fiber, Next.js
+**Backend**: Node.js, Express.js
+**Database**: MongoDB
+**3D Modeling**: Blender
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Additional Notes**:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- The platform aims to acquire sites or businesses to expand its reach and offer creators more opportunities.
+- Businesses will need to create a 3D presence within the mall to drive freelance contract work.
+- The platform will focus on integration and growth, fostering collaboration and providing valuable services to both businesses and creators.
