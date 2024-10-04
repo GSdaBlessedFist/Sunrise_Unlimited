@@ -22,7 +22,10 @@ function SearchUI() {
           searchResults={searchResults} 
           setSearchResults={setSearchResults}
         />
-        <TagRow setSearchResults={setSearchResults}/>
+        <TagRow 
+          setSearchResults={setSearchResults}
+          setQuery={setQuery}
+        />
         <SearchResults searchResults={searchResults}/>
       </div>
     );
