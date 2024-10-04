@@ -9,4 +9,5 @@
 body{
   background: var(--baseBackground);
   color: white;
+  box-sizing: border-box;
 }

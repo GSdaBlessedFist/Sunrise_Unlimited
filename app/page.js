@@ -1,4 +1,4 @@
-import SearchUI from "./sections/SearchUI/SearchUI";
+import SearchUI from "./components/SearchUI/SearchUI";
 
 export default function Home() {
   return (<>

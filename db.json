@@ -1,0 +1,160 @@
+{
+    "storefrontEntities":[
+    {
+      "id": "1",
+      "brand": {
+        "logo":"",
+        "name": "Mr. Chocolate",
+        "siteUrl": "https://mrchocolate.com/",
+        "spotColors": {
+          "red": "#7B1514",
+          "tangerine": "#E38632",
+          "yellow": "#F2C52F",
+          "offWhite": "#FAF7F6",
+          "brown": "#2F1F1B"
+        }
+      },
+      "startDate": "2021-01-01",
+      "tags": ["chocolate"],
+      "assets": {
+        "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027798/Storefront-Mr_Chocolate.gltz"
+      },
+      "owner": {
+        "name": "John Doe",
+        "store": "Main Branch",
+        "contactInfo": {
+          "name": "John Doe",
+          "email": "john.doe@awesomestore.com"
+        }
+      },
+      "subscriptionTier": {
+        "tier": "Premium",
+        "frequency": "Monthly"
+      },
+      "workOrders": [
+        {
+          "wo_description": "Install new display setup",
+          "wo_id": "WO123",
+          "status": "Completed",
+          "totalInvoiceAmount": 1200.00,
+          "worked_with": "TechTeam Inc.",
+          "dateStart": "2021-02-01",
+          "dateCompleted": "2021-02-15"
+        },
+        {
+          "wo_description": "Repair checkout system",
+          "wo_id": "WO124",
+          "status": "InProgress",
+          "totalInvoiceAmount": 350.00,
+          "worked_with": "RepairCorp",
+          "dateStart": "2023-09-01",
+          "dateCompleted": ""
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "brand": {
+        "logo":"",
+        "name": "Sweet Treats",
+        "siteUrl": "https://sweettreats.com/",
+        "spotColors": {
+          "pink": "#FF6F61",
+          "yellow": "#F7E58D",
+          "green": "#A8D8B9",
+          "brown": "#3E2723"
+        }
+      },
+      "startDate": "2022-03-15",
+      "tags": ["candy"],
+      "assets": {
+        "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027799/Storefront-Sweet_Treats.gltz"
+      },
+      "owner": {
+        "name": "Alice Smith",
+        "store": "Downtown Branch",
+        "contactInfo": {
+          "name": "Alice Smith",
+          "email": "alice.smith@sweettreats.com"
+        }
+      },
+      "subscriptionTier": {
+        "tier": "Standard",
+        "frequency": "Quarterly"
+      },
+      "workOrders": []
+    },
+    {
+      "id": "3",
+      "brand": {
+        "logo":"",
+        "name": "Choco Delight",
+        "siteUrl": "https://chocodelight.com/",
+        "spotColors": {
+          "darkBrown": "#5D3A29",
+          "gold": "#FFD700",
+          "cream": "#FFFDD0"
+        }
+      },
+      "startDate": "2020-08-10",
+      "tags": ["candy", "chocolate"],
+      "assets": {
+        "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027800/Storefront-Choco_Delight.gltz"
+      },
+      "owner": {
+        "name": "Bob Johnson",
+        "store": "East Side Branch",
+        "contactInfo": {
+          "name": "Bob Johnson",
+          "email": "bob.johnson@chocodelight.com"
+        }
+      },
+      "subscriptionTier": {
+        "tier": "Basic",
+        "frequency": "Monthly"
+      },
+      "workOrders": [
+        {
+          "wo_description": "Update inventory system",
+          "wo_id": "WO125",
+          "status": "Completed",
+          "totalInvoiceAmount": 500.00,
+          "worked_with": "InventoryTech",
+          "dateStart": "2021-05-01",
+          "dateCompleted": "2021-05-05"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "brand": {
+        "logo":"",
+        "name": "Fashion Hub",
+        "siteUrl": "https://fashionhub.com/",
+        "spotColors": {
+          "navy": "#001F3F",
+          "red": "#FF4136",
+          "gray": "#AAAAAA"
+        }
+      },
+      "startDate": "2023-01-01",
+      "tags": ["clothes"],
+      "assets": {
+        "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027801/Storefront-Fashion_Hub.gltz"
+      },
+      "owner": {
+        "name": "Emma Taylor",
+        "store": "Uptown Branch",
+        "contactInfo": {
+          "name": "Emma Taylor",
+          "email": "emma.taylor@fashionhub.com"
+        }
+      },
+      "subscriptionTier": {
+        "tier": "Premium",
+        "frequency": "Monthly"
+      },
+      "workOrders": []
+    }
+  ]
+}

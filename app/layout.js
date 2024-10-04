@@ -2,7 +2,7 @@
 import "./globals.css";
 import Header from "./sections/Header/Header";
 import Footer from "./sections/Footer/Footer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -14,8 +14,21 @@ import { useEffect } from "react";
 const headerFooterHeight = 70;
 
 export default function RootLayout({ children }) {
+  const [mainSectionHeight, setMainSectionHeight] = useState(0);
 
-  const mainSectionHeight = window.innerHeight - (headerFooterHeight * 2) ;
+  useEffect(() => {
+    const updateHeight = () => {
+      const height = window.innerHeight - (headerFooterHeight * 2);
+      setMainSectionHeight(height);
+    };
+
+    updateHeight(); // Set initial height
+    window.addEventListener('resize', updateHeight); // Update height on window resize
+
+    return () => {
+      window.removeEventListener('resize', updateHeight); // Cleanup listener on unmount
+    };
+  }, []);
 
   return (
     <html lang="en">
