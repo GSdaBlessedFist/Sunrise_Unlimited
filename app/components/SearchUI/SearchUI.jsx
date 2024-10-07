@@ -5,14 +5,18 @@ import SearchResults from "../SearchResults/SearchResults";
 import TagRow from "../TagRow/TagRow";
 import styles from "./styles.module.scss";
 
+
 function SearchUI() {
 
   const [query,setQuery] = useState("");
   const [searchResults,setSearchResults] = useState([""]);
+  
 
   useEffect(() => {
     console.log(`Inside Search_UI: ${searchResults}`)
   }, [searchResults]);
+
+  
 
     return (
       <div id="search-ui" className={styles.searchUI}>
@@ -26,7 +30,7 @@ function SearchUI() {
           setSearchResults={setSearchResults}
           setQuery={setQuery}
         />
-        <SearchResults searchResults={searchResults}/>
+        <SearchResults query={query} searchResults={searchResults} />
       </div>
     );
 }

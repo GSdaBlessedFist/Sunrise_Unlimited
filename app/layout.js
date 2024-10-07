@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "./sections/Header/Header";
 import Footer from "./sections/Footer/Footer";
 import { useEffect, useState } from "react";
-
+import { StorefrontProvider } from "../app/Providers/StorefrontProvider";
 
 
 // export const metadata = {
@@ -33,12 +33,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body >
+      <StorefrontProvider>
         <Header height={headerFooterHeight}/>
         <main  style={{height:mainSectionHeight  + "px"}}  className="w-full  bg-slate-800 flex justify-center items-center ">
           {children}
         </main>
         <Footer height={headerFooterHeight}/>
+        </StorefrontProvider>
       </body>
+      
     </html>
   );
 }

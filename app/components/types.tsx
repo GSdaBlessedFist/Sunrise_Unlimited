@@ -13,6 +13,7 @@ export type StoreFrontEntityType = {
     owner: OwnerType;
     subscriptionTier: SubscriptionTierType;
     workOrders: WorkOrderType[];
+    component: string;
 }
 
 export type OwnerType = {

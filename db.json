@@ -31,6 +31,7 @@
         "tier": "Premium",
         "frequency": "Monthly"
       },
+      "component": "storefronts/mr_chocolate/Storefront_MrChocolate",
       "workOrders": [
         {
           "wo_description": "Install new display setup",
@@ -82,6 +83,7 @@
         "tier": "Standard",
         "frequency": "Quarterly"
       },
+      "component":"",
       "workOrders": []
     },
     {
@@ -97,7 +99,7 @@
         }
       },
       "startDate": "2020-08-10",
-      "tags": ["candy", "chocolate"],
+      "tags": ["candy"],
       "assets": {
         "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027800/Storefront-Choco_Delight.gltz"
       },
@@ -113,6 +115,7 @@
         "tier": "Basic",
         "frequency": "Monthly"
       },
+      "component":"",
       "workOrders": [
         {
           "wo_description": "Update inventory system",
@@ -154,6 +157,7 @@
         "tier": "Premium",
         "frequency": "Monthly"
       },
+      "component":"",
       "workOrders": []
     }
   ]

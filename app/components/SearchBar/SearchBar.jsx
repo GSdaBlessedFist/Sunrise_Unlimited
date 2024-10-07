@@ -3,19 +3,22 @@ import { FaSearch } from "react-icons/fa";
 import { getStorefrontEntities } from "../../tasks/actions.js";
 import { useEffect } from "react";
 
+
 function SearchBar({ query, setQuery, searchResults,setSearchResults }) {
 
+  
+
   function updateQuery(e) {
-    
     setQuery(e.target.value);
   }
 
   async function handleSearch() {
     try {
       const response = await getStorefrontEntities(query); 
-      //console.log(`Inside handleSearch: ${response}`);
-      console.table(response);
+      
       setSearchResults(response)
+
+      
     } catch (error) {
       console.error('Error fetching storefronts:', error);
     }
