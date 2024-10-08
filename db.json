@@ -4,8 +4,8 @@
       "id": "1",
       "brand": {
         "logo":"",
-        "name": "Mr. Chocolate",
-        "siteUrl": "https://mrchocolate.com/",
+        "name": "Mr Chocolate",
+        "siteUrl": "mrchocolate.com/",
         "spotColors": {
           "red": "#7B1514",
           "tangerine": "#E38632",
@@ -57,8 +57,8 @@
       "id": "2",
       "brand": {
         "logo":"",
-        "name": "Sweet Treats",
-        "siteUrl": "https://sweettreats.com/",
+        "name": "The Chocolate Season",
+        "siteUrl": "www.thechocolateseason.com",
         "spotColors": {
           "pink": "#FF6F61",
           "yellow": "#F7E58D",
@@ -67,7 +67,7 @@
         }
       },
       "startDate": "2022-03-15",
-      "tags": ["candy"],
+      "tags": ["chocolate","gourmet"],
       "assets": {
         "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027799/Storefront-Sweet_Treats.gltz"
       },
@@ -83,7 +83,7 @@
         "tier": "Standard",
         "frequency": "Quarterly"
       },
-      "component":"",
+      "component":"storefronts/thechocolateseason/Storefront_TheChocolateSeason",
       "workOrders": []
     },
     {
@@ -99,7 +99,7 @@
         }
       },
       "startDate": "2020-08-10",
-      "tags": ["candy"],
+      "tags": [""],
       "assets": {
         "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027800/Storefront-Choco_Delight.gltz"
       },
@@ -141,7 +141,7 @@
         }
       },
       "startDate": "2023-01-01",
-      "tags": ["clothes"],
+      "tags": [""],
       "assets": {
         "sceneUrl": "https://res.cloudinary.com/dcfsgl6da/image/upload/v1728027801/Storefront-Fashion_Hub.gltz"
       },

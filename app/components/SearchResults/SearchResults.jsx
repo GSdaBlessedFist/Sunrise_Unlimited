@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { useStorefront } from '../../Providers/StorefrontProvider'; 
 
 function SearchResults({query,searchResults}) {
-    const { storefronts, updateStorefronts } = useStorefront();
+    const { storefronts, updateStorefronts,updateTargetStore } = useStorefront();
     const router = useRouter();
     
-    const selectResult = (name) => {
-        router.push(`/renderPage?query=${query}&destination=${name.split(/[. ]+/).join('')}`);
+    const selectResult = (store) => {
+        updateTargetStore(store)
+        router.push(`/renderPage?query=${query}&destination=${store.brand?.name.split(/[. ]+/).join('')}`);
     };
 
     //////////////////////////////////////////////////////////////
@@ -34,7 +35,7 @@ function SearchResults({query,searchResults}) {
     return (
         <div className={styles.searchResults}>
             {storefronts.map((store, index) => (
-                <Result key={index} onClick={() => selectResult(store?.brand?.name)}>
+                <Result key={index} onClick={() => selectResult(store)}>
                     <div className={styles.storeName}>{store?.brand?.name}</div>
                 </Result>
             ))}

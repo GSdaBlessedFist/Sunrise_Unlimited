@@ -9,7 +9,7 @@ import { useGLTF } from '@react-three/drei'
 export default function Storefront_MrChocolate(props) {
   const { nodes, materials } = useGLTF('/models/storefront_mr-chocolate.glb')
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} position={props.position}>
       <mesh geometry={nodes.storefront_floor.geometry} material={materials.storefront_floor} position={[0, 0.005, 0]} />
       <mesh geometry={nodes.human_block.geometry} material={materials['storefront_displaycase-baseColor']} position={[1.403, 0, -2.31]} scale={[0.756, 1, 0.756]} />
       <group position={[0, 0.005, 0]}>

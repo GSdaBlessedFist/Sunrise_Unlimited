@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import {getInitialTags, getStorefrontEntities} from "../../tasks/actions"
+import {getInitialTags, getStorefrontEntities} from "../../lib/actions"
 
 function TagRow({setSearchResults,setQuery}) {
     // randomly selected tags from storefrontEntities collection

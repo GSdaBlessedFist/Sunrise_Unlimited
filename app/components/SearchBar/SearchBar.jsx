@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { FaSearch } from "react-icons/fa";
-import { getStorefrontEntities } from "../../tasks/actions.js";
+import { getStorefrontEntities } from "../../lib/actions.js";
 import { useEffect } from "react";
 
 

@@ -12,7 +12,7 @@ export async function getStorefrontEntities(query) {
     }
 
     const data = await res.json();
-    const filteredData = data.filter(entity => entity.tags.includes(query));
+    const filteredData = data.filter(entity => entity.tags.includes(query) || entity.brand.name.includes(query) || entity.brand.siteUrl.includes(query));
 
     console.log('Fetched/filtered storefronts:', filteredData);
     return {
