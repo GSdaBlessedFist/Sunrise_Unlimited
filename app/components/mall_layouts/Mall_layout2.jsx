@@ -50,23 +50,14 @@ export default function Mall_Layout2(props) {
         material={materials.Mall_storefront_plot}
         position={[0, 0.001, 0]}
       />
-      <mesh
-        geometry={nodes.mall_storefront_plot_spacer.geometry}
-        material={materials.Mall_storefront_plot_spacer}
-        scale={[1, 0, 1]}
-      />
+       
       <mesh
         ref={plotRefs.current[1]}
         geometry={nodes.mall_storefront_plot2.geometry}
         material={materials.Mall_storefront_plot2}
         position={[9, 0.001, 0]}
       />
-      <mesh
-        geometry={nodes.mall_storefront_plot_spacer2.geometry}
-        material={materials.Mall_storefront_plot_spacer}
-        position={[9, 0, 0]}
-        scale={[1, 0, 1]}
-      />
+       
 
       {/* ////////////////////////////////////////////////////////////////// */}
       {/* ////////////////////////////////////////////////////////////////// */}

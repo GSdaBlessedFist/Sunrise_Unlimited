@@ -3,18 +3,21 @@ import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useStorefront } from '../Providers/StorefrontProvider'; 
 import dynamic from 'next/dynamic';
+import { useStorefront } from '../Providers/StorefrontProvider'; 
+import Portal from "../components/modals/Portal";
+import WelcomeModal from "../components/modals/WelcomeModal";
+
 
  function RenderPage() {
-  
-
-  // const searchParams = useSearchParams();
-  // const query = searchParams ? searchParams.get('query') : null;
-  // const destination = searchParams ? searchParams.get('destination') : null;
+ 
   const {storefronts} = useStorefront();
   const [loadedComponents, setLoadedComponents] = useState([]);
   const [LayoutComponent, setLayoutComponent] = useState(null);
+  const [welcomeModalIsOpen,setWelcomeModalIsOpen]=useState(null);
+
+  //@ visitorType options:  "guest","member","storeowner";
+  const [visitorType,setVisitorType] = useState("guest");
 
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
@@ -32,7 +35,9 @@ import dynamic from 'next/dynamic';
     setLayoutComponent(() => selectedLayout);
   },[storefronts]);
 
-
+  useEffect(()=>{
+    setWelcomeModalIsOpen(true);
+  },[]);
   
   
   ///////////////////////////////////////////////////
@@ -40,7 +45,12 @@ import dynamic from 'next/dynamic';
   ///////////////////////////////////////////////////
 
 
-  return (
+  return (<>
+    {welcomeModalIsOpen && 
+    <Portal>
+      <WelcomeModal visitorType={visitorType}/>
+    </Portal>  
+    }
     <Suspense fallback={<div>Loading...</div>}>
       <div style={{ width: '100vw', height: '100vh' }}>
         <Canvas camera={{ position: [5, 2.25, 20], fov: 45 }}>
@@ -51,11 +61,9 @@ import dynamic from 'next/dynamic';
           </Suspense>
         </Canvas>
         <InfoDisplay/>
-        
-        
       </div>
     </Suspense>
-  );
+    </>);
 }
 export default RenderPage;
 

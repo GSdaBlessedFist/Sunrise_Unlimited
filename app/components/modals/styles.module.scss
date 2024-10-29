@@ -1,0 +1,26 @@
+@import "../../../mixins.scss";
+
+.welcomeModalContainer{
+    @apply absolute flex flex-col justify-center items-center border-8 border-[#869bf1] py-5 px-8 rounded-md ;
+    user-select: none;
+    &::before{
+        content:"";
+        //need to add bg color to modal
+        @apply relative top-0 left-0 bg-red-200; // Ensure dimensions are set
+        z-index: 2;
+    }
+}
+.modalHeader{
+    @apply w-full font-bold text-3xl text-center text-white my-8;
+}
+.guestStyle{
+    @apply w-[490px] flex flex-col justify-start items-start mb-8;
+    & ol{
+        @apply  w-full p-4 pt-0 list-disc;
+        & li{
+            @apply m-2;
+        }
+    }
+}
+.memberStyle{}
+.storeownerStyle{}
