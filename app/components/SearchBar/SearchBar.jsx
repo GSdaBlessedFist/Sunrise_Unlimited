@@ -2,11 +2,12 @@ import styles from "./styles.module.scss";
 import { FaSearch } from "react-icons/fa";
 import { getStorefrontEntities } from "../../lib/actions.js";
 import { useEffect } from "react";
+import { useStorefront } from "../../Providers/StorefrontProvider";
 
 
-function SearchBar({ query, setQuery, searchResults,setSearchResults }) {
+function SearchBar({ query, setQuery, setSearchPerformed }) {
 
-  
+  const { updateStorefronts } = useStorefront();
 
   function updateQuery(e) {
     setQuery(e.target.value);
@@ -15,18 +16,13 @@ function SearchBar({ query, setQuery, searchResults,setSearchResults }) {
   async function handleSearch() {
     try {
       const response = await getStorefrontEntities(query); 
-      
-      setSearchResults(response)
-
-      
+      updateStorefronts(response.storefrontEntities || []);
+      setSearchPerformed(true);
     } catch (error) {
       console.error('Error fetching storefronts:', error);
     }
   }
 
-  useEffect(() => {
-    console.log(`Inside SearchBar: ${searchResults}`)
-  }, [searchResults]);
 
   return (
     <div className={styles.searchBar}>

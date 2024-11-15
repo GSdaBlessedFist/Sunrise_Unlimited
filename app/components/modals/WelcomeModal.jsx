@@ -1,47 +1,55 @@
 import { useEffect, useState } from "react";
-import styles from "./styles.module.scss";
+import styles from "./welcomeModal.module.scss";
 import { FaSearch } from "react-icons/fa";
 import CloseButton from "../CloseButton";
 
-function WelcomeModal({visitorType}) {
+function WelcomeModal({userInfo}) {
 
     const [isOpen, setIsOpen] = useState(true);
     const [modalContent,setModalContent] = useState(null);
 
+
+
     useEffect(() => {
-        switch(visitorType) {
-            case "guest":
-                setModalContent(
-                    <div className={styles.guestStyle}>
-                        <div className={styles.modalHeader}>Welcome to Sunrise Unlmtd</div>
-                        <div className="w-24 h-6 font-thin italic text-white">Navigation</div>
-                        <ol>
-                            <li>By default, you’ll be taken to your destination storefront</li>
-                            <li>At anytime, you can look around with the mouse</li>
-                            <li>To change your destination, either click on the storefront brand sign as you pass it OR </li>                            
-                        </ol>
-                        <div className="w-full">
-                            <div className="absolute flex items-center justify-end right-[68px] bottom-16 w-52 h-6 bg-white overflow-hidden">
-                                <div className="p-2 bg-blue-300">
-                                    <FaSearch color="white"/>
-                                </div>
-                            </div>
-                        </div>
+        switch (userInfo.userType) {
+          case "guest":
+            setModalContent(
+              <>
+                <div className={styles.guestStyle}>
+                  <div className={styles.modalHeader}>Welcome to Sunrise Unlmtd</div>
+                  <div className="w-24 h-6 font-thin italic text-white">Navigation</div>
+                  <ol>
+                    <li>By default, you’ll be taken to your destination storefront</li>
+                    <li>At anytime, you can look around with the mouse</li>
+                    <li>
+                      To change your destination, either click on the storefront brand sign as you
+                      pass it OR{" "}
+                    </li>
+                  </ol>
+                  <div id="mock-searchbar" className="w-full">
+                    <div className="absolute flex items-center justify-end right-[68px] bottom-24 w-52 h-6 bg-white overflow-hidden">
+                      <div className="p-2 bg-blue-300">
+                        <FaSearch color="white" />
+                      </div>
                     </div>
-                  );
-                break;
-            case "member":
-                setModalContent(
-                    <div className={styles.memberStyle}>
-                        
-                    </div>
-                  );
-                break;
-            case "storeowner":
-                break;
-            default:
-                setModalContent(null);
-                break;
+                  </div>
+                </div>
+                <div className="w-full flex items-center justify-center text-2xl italic">Thanks for visiting, enjoy.</div>
+              </>
+            );
+            break;
+          case "member":
+            setModalContent(<>
+                <div className={styles.memberStyle}>
+                    <div className={styles.modalHeader}>Welcome back, {userInfo.screenName}</div>
+                </div>
+            </>);
+            break;
+          case "storeowner":
+            break;
+          default:
+            setModalContent(null);
+            break;
         }
         
         

@@ -16,16 +16,10 @@ export default function Mall_Layout1({ storefronts, ...props }) {
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   
-  useEffect(() =>{
-    console.log({storefronts})
-  },
-  [storefronts])
-
   useEffect(() => {
     if (storefronts && storefronts.length > 0) {
       const loadComponents = async () => {
         const components = await loadStorefrontComponents(storefronts);
-        console.log({components})// <-----ISSUE HERE
         setLoadedComponents(components);
       };
       loadComponents();
@@ -53,7 +47,7 @@ export default function Mall_Layout1({ storefronts, ...props }) {
       <PerspectiveCamera makeDefault={true} name="layout1_camera" far={100} near={0.1} fov={22.895} position={[8.765, 1.647, 7.462]} rotation={[-0.018, 0.874, 0.014]} />
       <mesh ref={plotRef} geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
       <Suspense fallback={<div>Loading storefronts...</div>}>
-        {loadedComponents.map(({ id, Component,componentPath }) => (
+        {loadedComponents.map(({ id, Component }) => (
           <Component key={id} position={plotPositions} />
         ))}
       </Suspense>

@@ -4,7 +4,7 @@ import Header from "./sections/Header/Header";
 import Footer from "./sections/Footer/Footer";
 import { useEffect, useState } from "react";
 import { StorefrontProvider } from "../app/Providers/StorefrontProvider";
-
+import { UserInfoProvider } from "./Providers/UserInfoProvider";
 
 // export const metadata = {
 //   title: "Create Next App",
@@ -33,13 +33,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body >
-      <StorefrontProvider>
-        <Header height={headerFooterHeight}/>
-        <main  style={{height:mainSectionHeight  + "px"}}  className="w-full  bg-slate-800 flex justify-center items-center ">
-          {children}
-        </main>
-        <Footer height={headerFooterHeight}/>
-        </StorefrontProvider>
+        <UserInfoProvider>
+          <StorefrontProvider>
+            <Header height={headerFooterHeight}/>
+            <main  style={{height:mainSectionHeight  + "px"}}  className="w-full  bg-slate-800 flex justify-center items-center ">
+              {children}
+            </main>
+            <Footer height={headerFooterHeight}/>
+          </StorefrontProvider>
+        </UserInfoProvider>
       </body>
       
     </html>

@@ -3,38 +3,40 @@ import styles from "./styles.module.scss";
 import { useRouter } from "next/navigation";
 import { useStorefront } from '../../Providers/StorefrontProvider'; 
 
-function SearchResults({query,searchResults}) {
+function SearchResults({query,searchPerformed}) {
+    // const { storefronts, updateStorefronts,updateTargetStore } = useStorefront();
     const { storefronts, updateStorefronts,updateTargetStore } = useStorefront();
     const router = useRouter();
     
     const selectResult = (store) => {
         updateTargetStore(store)
-        router.push(`/renderPage?query=${query}&destination=${store.brand?.name.split(/[. ]+/).join('')}`);
+        const destination = store.brand?.name.split(/[. ]+/).join('') || '';
+        router.push(`/renderPage?query=${query}&destination=${destination}`);
     };
 
     //////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////
 
-    useEffect(() => {
-        if (searchResults['storefrontEntities']) {
-            updateStorefronts(searchResults['storefrontEntities']);
-        }
-    }, [searchResults, updateStorefronts]);
-
-    useEffect(() =>{
-        console.log(`storefronts: ${storefronts}`)
-    },[storefronts]);
-
-
-    //////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////
     
+
+    useEffect(() => {
+        console.log(`Storefronts[SearchResults]: `, storefronts);
+    }, [storefronts]);
+
+
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+
+    // Handle no results after search
+    if (searchPerformed && (!storefronts || storefronts.length === 0)) {
+        return <div>No stores found for this tag.</div>;
+    }
 
     return (
         <div className={styles.searchResults}>
-            {storefronts.map((store, index) => (
+            {storefronts && storefronts.map((store, index) => (
                 <Result key={index} onClick={() => selectResult(store)}>
                     <div className={styles.storeName}>{store?.brand?.name}</div>
                 </Result>
@@ -44,6 +46,10 @@ function SearchResults({query,searchResults}) {
 }
 
 export default SearchResults;
+
+
+
+
 
 function Result({children, onClick}) {
     return (

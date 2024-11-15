@@ -10,6 +10,8 @@ function SearchUI() {
 
   const [query,setQuery] = useState("");
   const [searchResults,setSearchResults] = useState([""]);
+  const [searchPerformed, setSearchPerformed] = useState(false);
+  
   
 
   useEffect(() => {
@@ -25,12 +27,14 @@ function SearchUI() {
           setQuery={setQuery} 
           searchResults={searchResults} 
           setSearchResults={setSearchResults}
+          setSearchPerformed={setSearchPerformed}
         />
         <TagRow 
           setSearchResults={setSearchResults}
           setQuery={setQuery}
+          setSearchPerformed={setSearchPerformed}
         />
-        <SearchResults query={query} searchResults={searchResults} />
+        <SearchResults query={query} searchResults={searchResults} searchPerformed={searchPerformed}/>
       </div>
     );
 }

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import {getInitialTags, getStorefrontEntities} from "../../lib/actions"
 
-function TagRow({setSearchResults,setQuery}) {
-    // randomly selected tags from storefrontEntities collection
+function TagRow({setSearchResults, setQuery, setSearchPerformed}) {
+    
     const [initialListOfTags,setInitialListOfTags] = useState([""]);
 
     useEffect(() => {
@@ -18,7 +18,11 @@ function TagRow({setSearchResults,setQuery}) {
     return (
         <div className={styles.tagRow}>
             {initialListOfTags.map((tag, index) => (
-                <TagButton key={index} name={tag} setQuery={setQuery} setSearchResults={setSearchResults}/>
+                <TagButton key={index} name={tag} 
+                    setQuery={setQuery} 
+                    setSearchResults={setSearchResults}
+                    setSearchPerformed={setSearchPerformed}
+                />
             ))}
         </div>
     );
@@ -26,7 +30,7 @@ function TagRow({setSearchResults,setQuery}) {
 
 export default TagRow;
 
-function TagButton({name,setSearchResults,setQuery}) {
+function TagButton({name,setSearchResults,setQuery,setSearchPerformed}) {
 
     async function handleTagSearch(){
         try {
@@ -35,6 +39,7 @@ function TagButton({name,setSearchResults,setQuery}) {
             console.table(response);
             setQuery(name);
             setSearchResults(response)
+            setSearchPerformed(false);
           } catch (error) {
             console.error('Error fetching storefronts:', error);
           }

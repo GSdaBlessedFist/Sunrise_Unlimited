@@ -22,5 +22,7 @@
         }
     }
 }
-.memberStyle{}
+.memberStyle{
+    @apply w-52 flex flex-col justify-start items-start mb-8;
+}
 .storeownerStyle{}

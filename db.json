@@ -58,7 +58,7 @@
       "brand": {
         "logo":"",
         "name": "The Chocolate Season",
-        "siteUrl": "www.thechocolateseason.com",
+        "siteUrl": "thechocolateseason.com/",
         "spotColors": {
           "pink": "#FF6F61",
           "yellow": "#F7E58D",
@@ -91,7 +91,7 @@
       "brand": {
         "logo":"",
         "name": "Choco Delight",
-        "siteUrl": "https://chocodelight.com/",
+        "siteUrl": "chocodelight.com/",
         "spotColors": {
           "darkBrown": "#5D3A29",
           "gold": "#FFD700",
@@ -133,7 +133,7 @@
       "brand": {
         "logo":"",
         "name": "Fashion Hub",
-        "siteUrl": "https://fashionhub.com/",
+        "siteUrl": "fashionhub.com/",
         "spotColors": {
           "navy": "#001F3F",
           "red": "#FF4136",

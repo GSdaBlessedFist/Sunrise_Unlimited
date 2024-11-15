@@ -1,34 +1,35 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const StorefrontContext = createContext();
+
 export const StorefrontProvider = ({ children }) => {
-    const [storefronts, setStorefronts] = useState([]);
-    const [targetStore,setTargetStore] = useState({});
-    
-    const updateStorefronts = (newEntities) => {
-        setStorefronts(newEntities);
-    };
+  const [storefronts, setStorefronts] = useState([]);
+  const [targetStore, setTargetStore] = useState({});
+  const [urls, setUrls] = useState([]);
 
-    const updateTargetStore = (storefront) => {
-        setTargetStore(storefront);
-    }
+  const updateStorefronts = (newEntities) => {
+    setStorefronts(newEntities);
+    const newUrls = newEntities.map((entity) => entity.brand.siteUrl);
+    setUrls(newUrls);
+    localStorage.setItem("storefronts", JSON.stringify(newUrls));
+  };
 
-    useEffect(() => {
-        // if (storefronts && storefronts.length > 0) {
-        //     console.log(Object.entries(storefronts[0]));
-        // }
-        console.log(targetStore)
-    }, [storefronts,targetStore]);
+  const updateTargetStore = (storefront) => {
+    setTargetStore(storefront);
+  };
 
-    return (
-        <StorefrontContext.Provider value={{ storefronts, updateStorefronts,targetStore,updateTargetStore }}>
-            {children}
-        </StorefrontContext.Provider>
-    );
+  // 
+
+  const value = {
+    storefronts,
+    updateStorefronts,
+    targetStore,
+    updateTargetStore,
+  };
+
+  return <StorefrontContext.Provider value={value}>{children}</StorefrontContext.Provider>;
 };
 
 export const useStorefront = () => {
-    return useContext(StorefrontContext);
+  return useContext(StorefrontContext);
 };
-
-

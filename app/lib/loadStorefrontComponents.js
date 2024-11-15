@@ -9,9 +9,13 @@ import dynamic from 'next/dynamic';
 export const loadStorefrontComponents = async (storefronts) => {
   if (!storefronts || storefronts.length === 0) return [];
 
+  console.log("Storefronts before loading components:", storefronts);
+
   const components = await Promise.all(
     storefronts.map(async (storefront) => {
-      const { component } = storefront;
+      const {id, component } = storefront;
+      //console.log(`Processing storefront with id: ${id}, component: ${component}`);
+
 
       try {
         // Dynamically import the component
