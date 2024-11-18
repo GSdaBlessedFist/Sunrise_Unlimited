@@ -80,6 +80,7 @@
         }
       },
       "subscriptionTier": {
+        "_id":"standard-tier",
         "tier": "Standard",
         "frequency": "Quarterly"
       },

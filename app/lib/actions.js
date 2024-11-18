@@ -1,58 +1,58 @@
+import mongoDB from "./mongodb";
+
 export async function getStorefrontEntities(query) {
 
-  // WHILE using json-server:  post fetch filter
-  // MongoDB: optimize query using sdk instead
+  const mongodb = new mongoDB();
 
   try {
-    console.log('Fetching storefronts...');
-    const res = await fetch(`http://localhost:3001/storefrontEntities`);
+    console.log('Connecting to MongoDB...');
+    const db = await mongodb.connect();
+    const collection = db.collection('storefronts');
     
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
+    const data = await collection.find({
+      $or: [
+        { tags: { $regex: query, $options: 'i' } },
+        { 'brand.name': { $regex: query, $options: 'i' } },
+        { 'brand.siteUrl': { $regex: query, $options: 'i' } }
+      ]
+    }).toArray();
 
-    const data = await res.json();
-    const filteredData = data.filter(entity => entity.tags.includes(query) || entity.brand.name.includes(query) || entity.brand.siteUrl.includes(query));
+    console.log('Fetched/filtered storefronts:', data);
 
-    console.log('Fetched/filtered storefronts:', filteredData);
     return {
-      storefrontEntities: filteredData
-    }
+      storefrontEntities: data
+    };
 
   } catch (error) {
     console.error('Error fetching storefronts:', error);
     return {
       storefrontEntities: []
     }
+  } finally{
+    await mongodb.close();
   }
 }
 
 
 export async function getInitialTags() {
+  const mongodb = new mongoDB();
+
   try {
+    console.log('Connecting to MongoDB...');
+    const db = await mongodb.connect();
+    const collection = db.collection('storefronts');
+
     console.log('Fetching storefront entities...');
-    const res = await fetch(`http://localhost:3001/storefrontEntities`);
-    
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
 
-    const data = await res.json();
+    const pipeline = [
+      { $unwind: '$tags' }, // Unwind the `tags` array
+      { $group: { _id: '$tags', count: { $sum: 1 } } }, // Group tags and count occurrences
+      { $sample: { size: Math.floor(Math.random() * 3) + 3 } } // Randomly sample 3-5 tags
+    ];
 
-    // Step 1: Extract all tags
-    const allTags = data.flatMap(entity => entity.tags);
+    const result = await collection.aggregate(pipeline).toArray();
 
-    // Step 2: Remove duplicates
-    const uniqueTags = [...new Set(allTags)];
-
-    // Step 3: Randomly select between 3 and 5 unique tags
-    const getRandomTags = (tags, count) => {
-      const shuffled = tags.sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, count);
-    };
-
-    const randomCount = Math.floor(Math.random() * 3) + 3; // Generates a number between 3 and 5
-    const randomTags = getRandomTags(uniqueTags, randomCount);
+    const randomTags = result.map(tag => tag._id);
 
     console.log('Fetched random tags:', randomTags);
     return {
