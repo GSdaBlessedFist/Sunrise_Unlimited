@@ -3,6 +3,10 @@ import { useGLTF,PerspectiveCamera } from '@react-three/drei'
 import { useThree } from '@react-three/fiber';
 import { loadStorefrontComponents } from '../../lib/loadStorefrontComponents';
 import { useStorefront } from '../../Providers/StorefrontProvider';
+import p from '../../helpers/consoleHelper';
+
+const SOURCE = "Mall Layout off";
+const srcColor = 100;
 
 export default function Mall_Layout1({ storefronts, ...props }) {
   const { scene,nodes, materials,cameras } = useGLTF('/models/mall_layout1.glb')
@@ -16,26 +20,6 @@ export default function Mall_Layout1({ storefronts, ...props }) {
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   
-  useEffect(() =>{
-    console.log({storefronts})
-  },
-  [storefronts])
-
-  useEffect(() => {
-    if (storefronts && storefronts.length > 0) {
-      const loadComponents = async () => {
-        const components = await loadStorefrontComponents(storefronts);
-        console.log({components})// <-----ISSUE HERE
-        setLoadedComponents(components);
-      };
-      loadComponents();
-    }
-  }, [storefronts]);
-
-  useEffect(() => {
-    console.log("loadedComponents: ", loadedComponents);  
-  }, [loadedComponents]);
-
   useEffect(()=>{
     setPlotPositions(plotRef.current.position)
   },[])
@@ -44,6 +28,29 @@ export default function Mall_Layout1({ storefronts, ...props }) {
     console.log(plotPositions)
   },[plotPositions])
 
+  ////////////////////////////////////////////////////////
+
+  useEffect(() =>{
+    p(SOURCE,storefronts,srcColor + 32,"storefronts:")
+  },
+  [storefronts])
+
+  useEffect(() => {
+    if (storefronts && storefronts.length !== 0) {
+      const loadComponents = async () => {
+        const components = await loadStorefrontComponents(storefronts);
+        //p(SOURCE,components,srcColor + 10,"components loaded:")// <-----ISSUE HERE
+        setLoadedComponents(components);
+      };
+      loadComponents();
+    }
+  }, [storefronts]);
+
+  useEffect(() => {
+    //p(SOURCE,loadedComponents,srcColor + 10,"loadedComponents:") 
+  }, [loadedComponents]);
+
+  
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////

@@ -53,7 +53,7 @@ function WelcomeModal({userInfo}) {
         }
         
         
-    },[]);
+    },[userInfo.screenName,userInfo.userType]);
 
     return (<>
         {isOpen && 

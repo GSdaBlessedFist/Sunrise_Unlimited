@@ -1,18 +1,25 @@
 // lib/loadStorefrontComponents.js
 import dynamic from 'next/dynamic';
+import p from '../helpers/consoleHelper';
 
 /**
  * Dynamically loads storefront components based on the storefront data.
  * @param {Array} storefronts - Array of storefront objects.
  * @returns {Promise<Array>} - A promise that resolves to an array of loaded components.
  */
+
+const SOURCE = "loadStorefrontComponents";
+const srcColor = 115;
+
+
 export const loadStorefrontComponents = async (storefronts) => {
   if (!storefronts || storefronts.length === 0) return [];
 
-  console.log("Storefronts before loading components:", storefronts);
+  p(SOURCE,storefronts,srcColor,"Storefronts before loading components:");
+  //storefronts here is an object with ['storefronts']
 
   const components = await Promise.all(
-    storefronts.map(async (storefront) => {
+    storefronts.storefronts.map(async (storefront) => {
       const {id, component } = storefront;
       //console.log(`Processing storefront with id: ${id}, component: ${component}`);
 

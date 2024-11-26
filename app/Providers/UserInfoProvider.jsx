@@ -20,7 +20,7 @@ export const UserInfoProvider = ({ children }) => {
     
     
     useEffect(() => {
-        console.log({userInfo})
+        //console.log({userInfo})
     }, []);
     
     

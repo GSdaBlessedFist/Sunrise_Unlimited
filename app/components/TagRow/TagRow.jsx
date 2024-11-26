@@ -1,53 +1,81 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import {getInitialTags, getStorefrontEntities} from "../../lib/actions"
+import p from "../../helpers/consoleHelper";
+import { useStorefront } from "../../Providers/StorefrontProvider";
+//import p from "../helpers/consoleHelper"; 
+//@ p = function (sourceName,data, hue=25, variableName="")
 
-function TagRow({setSearchResults, setQuery, setSearchPerformed}) {
-    
-    const [initialListOfTags,setInitialListOfTags] = useState([""]);
+var SOURCE;
+var srcColor;
 
-    useEffect(() => {
-        async function fetchTags() {
-            const result = await getInitialTags();
-            setInitialListOfTags(result.tags);
-        }
-        fetchTags();
-    }, []);
+function TagRow({ setSearchResults, setQuery, setSearchPerformed }) {
+  SOURCE = "Tag ROW";
+  srcColor = 35;
+  const [tags, setTags] = useState([]);
 
-    return (
-        <div className={styles.tagRow}>
-            {initialListOfTags.map((tag, index) => (
-                <TagButton key={index} name={tag} 
-                    setQuery={setQuery} 
-                    setSearchResults={setSearchResults}
-                    setSearchPerformed={setSearchPerformed}
-                />
-            ))}
-        </div>
-    );
+  useEffect(() => {
+    async function fetchTags() {
+      try {
+        const response = await fetch("/api/initialTags")
+        if (!response.ok) {throw new Error(`HTTP error! Status: ${response.status}`);}
+        const data = await response.json();
+        setTags(data.tags || []);
+      } catch (error) {
+        console.error('Error fetching tags:', error);
+      }
+    }
+    fetchTags();
+  }, []);
+
+  return (
+    <div className={styles.tagRow}>
+      {tags.map((tag, index) => (
+        <TagButton
+          key={index}
+          name={tag}
+          setQuery={setQuery}
+          setSearchResults={setSearchResults}
+          setSearchPerformed={setSearchPerformed}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default TagRow;
 
-function TagButton({name,setSearchResults,setQuery,setSearchPerformed}) {
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-    async function handleTagSearch(){
-        try {
-            const response = await getStorefrontEntities(name); 
-            //console.log(`Inside handleSearch: ${response}`);
-            console.table(response);
-            setQuery(name);
-            setSearchResults(response)
-            setSearchPerformed(false);
-          } catch (error) {
-            console.error('Error fetching storefronts:', error);
-          }
+function TagButton({ name, setSearchResults, setQuery, setSearchPerformed }) {
+
+  SOURCE = "Tag BUTTON off";
+  srcColor = 40;
+  const { updateStorefronts } = useStorefront();
+
+  async function handleTagSearch() {
+    try {
+      const response = await fetch(`/api/storefronts?q=${encodeURIComponent(name)}`)
+      if (!response.ok) {throw new Error(`HTTP error! Status: ${response.status}`);}
+
+      const data = await response.json(); // Parse the JSON response
+
+      p(SOURCE,data,srcColor,"fetched storefronts");
+
+      setQuery(name); // Set the query state
+      setSearchResults(data.storefronts|| []);
+      updateStorefronts(data.storefronts|| []);
+      setSearchPerformed(true); // Indicate search was performed
+    } catch (error) {
+      console.error('Error fetching storefronts:', error);
     }
+  }
 
-    return (
-        <button className={styles.tagButton} onClick={handleTagSearch}>
-            {name}
-        </button>
-    );
+  return (
+    <button className={styles.tagButton} onClick={handleTagSearch}>
+      {name}
+    </button>
+  );
 }

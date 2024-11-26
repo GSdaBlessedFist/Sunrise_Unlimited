@@ -1,11 +1,13 @@
 import styles from "./styles.module.scss";
 import { FaSearch } from "react-icons/fa";
-import { getStorefrontEntities } from "../../lib/actions.js";
 import { useEffect } from "react";
 import { useStorefront } from "../../Providers/StorefrontProvider";
+import p from "../../helpers/consoleHelper";
 
+const SOURCE = "SearchBar";
+const srcColor = 45;
 
-function SearchBar({ query, setQuery, setSearchPerformed }) {
+function SearchBar({ query, setQuery,setSearchResults, setSearchPerformed }) {
 
   const { updateStorefronts } = useStorefront();
 
@@ -14,15 +16,23 @@ function SearchBar({ query, setQuery, setSearchPerformed }) {
   }
 
   async function handleSearch() {
+    p(SOURCE,query,srcColor,"query");
+
     try {
-      const response = await getStorefrontEntities(query); 
-      updateStorefronts(response.storefrontEntities || []);
+      const response = await fetch(`/api/storefronts?q=${query}`);
+      const storefrontData = await response.json();
+      p(SOURCE, storefrontData, srcColor, "Fetched storefront data:");
+
+      const additionalStorefront = {
+        brand: { siteUrl: query },
+      };
+
+      updateStorefronts(storefrontData.storefronts);//
       setSearchPerformed(true);
     } catch (error) {
-      console.error('Error fetching storefronts:', error);
+      console.error("Error fetching storefront data:", error);
     }
   }
-
 
   return (
     <div className={styles.searchBar}>

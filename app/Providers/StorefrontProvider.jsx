@@ -1,4 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react"; 
+import p from "../helpers/consoleHelper"; 
+//@ p = function (sourceName,data, hue=25, variableName="")
+
+const SOURCE = "StorefrontProvider off";
+const srcColor = 5;
 
 const StorefrontContext = createContext();
 
@@ -9,16 +14,45 @@ export const StorefrontProvider = ({ children }) => {
 
   const updateStorefronts = (newEntities) => {
     setStorefronts(newEntities);
-    const newUrls = newEntities.map((entity) => entity.brand.siteUrl);
-    setUrls(newUrls);
-    localStorage.setItem("storefronts", JSON.stringify(newUrls));
+    const storefrontUrls = newEntities.map((entity) => ({ url: entity.brand.siteUrl }));
+   
+    setUrls({storefrontUrls});
+    localStorage.setItem("storefronts", JSON.stringify(storefrontUrls));
   };
 
   const updateTargetStore = (storefront) => {
     setTargetStore(storefront);
+    localStorage.setItem("targetStore", JSON.stringify(storefront));
   };
 
-  // 
+  const loadTargetStore = () => {
+    const stored = localStorage.getItem("targetStore");
+    return stored ? JSON.parse(stored) : null;
+  };
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
+  // useEffect(()=>{
+  //   localStorage.setItem("storefronts", JSON.stringify(urls));
+  // },[urls])
+
+  useEffect(() => {
+    p(SOURCE,storefronts,srcColor,"Storefronts:");
+  }, [storefronts]);
+
+
+  useEffect(() => {
+    // const stored = loadTargetStore();
+    // if (stored) setTargetStore(stored);
+  }, []);
+
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
 
   const value = {
     storefronts,
@@ -27,7 +61,11 @@ export const StorefrontProvider = ({ children }) => {
     updateTargetStore,
   };
 
-  return <StorefrontContext.Provider value={value}>{children}</StorefrontContext.Provider>;
+  return (<
+    StorefrontContext.Provider value={value}>
+      {children}
+    </StorefrontContext.Provider>
+  );
 };
 
 export const useStorefront = () => {

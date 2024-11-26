@@ -2,99 +2,95 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useStorefront } from "../Providers/StorefrontProvider";
 import Portal from "../components/modals/Portal";
 import WelcomeModal from "../components/modals/WelcomeModal";
 import { useUserInfo } from "../Providers/UserInfoProvider";
-import { useRouter } from "next/navigation";
-// import MallLayout1 from "../components/mall_layouts/Mall_layout1.jsx";
-// import MallLayout2 from "../components/mall_layouts/Mall_layout2.jsx";
+import { useRouter, useSearchParams } from "next/navigation";
+import p from "../helpers/consoleHelper";
 
+const SOURCE = "Render Page off";
+const srcColor = 75;
+
+//////////////////////////////////////////////////////////////////////////////////
 
 function RenderPage() {
   const router = useRouter();
   const { storefronts, updateStorefronts, targetStore, updateTargetStore } = useStorefront();
+  const { userInfo } = useUserInfo();
   const [loadedStores,setLoadedStores] = useState([]);
   const [loadedComponents, setLoadedComponents] = useState([]);
   const [LayoutComponent, setLayoutComponent] = useState(null);
   const [welcomeModalIsOpen, setWelcomeModalIsOpen] = useState(null);
 
-  //@ userInfo.userType options:  "guest","member","creator","storeowner";
+  // userInfo.userType options:  "guest","member","creator","storeowner";
 
-  const { userInfo } = useUserInfo();
 
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
-
+  const searchParams = useSearchParams();
   useEffect(() => {
+    const query = searchParams.get("query");
+  
     const fetchStorefrontData = async () => {
-      // Retrieve the URLs from localStorage
-      const urls = await JSON.parse(localStorage.getItem("storefronts"));
-      console.log(urls)
-      if (!urls || urls.length === 0) {
-        console.error("No URLs found in localStorage");
-        return;
-      }
-    
       try {
-        const fetchPromises = urls.map(url =>
-          fetch(`http://localhost:3001/storefrontEntities?brand.siteUrl=${url}`)
-        );
-    
-        const responses = await Promise.all(fetchPromises);
-        const data = await Promise.all(responses.map(response => response.json()));
-        console.log("Fetched data:", data);
-        setLoadedStores(data);
-    
+        const response = await fetch(`/api/storefronts?q=${query}`);
+        const storefrontData = await response.json();
+        p(SOURCE, storefrontData, srcColor, "Fetched storefront data:");
+        setLoadedStores(storefrontData);
       } catch (error) {
         console.error("Error fetching storefront data:", error);
       }
     };
-
-    fetchStorefrontData();
-  }, [storefronts]);
-
-
+  
+    if (!loadedStores.storefronts?.length && query) {
+      // Fetch data only if storefronts are empty and query exists
+      fetchStorefrontData();
+    } else {
+      p(SOURCE, storefronts, srcColor, "Using existing storefronts:");
+    }
+  }, [loadedStores,storefronts, searchParams]);
+  
+  //////////////////////////////////////////
+  useEffect(() => {
+    var initial = 0;
+    loadedStores.storefronts?.forEach((store,index) =>{
+      p(SOURCE, store, srcColor + initial, `store #${index + 1}: `);
+      initial += 10;
+    })
+  },[loadedStores]);
   //////////////////////////////////////////
 
-  const layoutMap = {
-    1: dynamic(() => import("../components/mall_layouts/Mall_layout1.jsx"),{ssr:false}),
-    2: dynamic(() => import("../components/mall_layouts/Mall_layout2.jsx"),{ssr:false}),
-  };
   /*Loading the Layouts*/
   useEffect(() => {
-    
-    const layoutId = loadedStores.length;
-    
-    
-
+    const layoutMap = {
+      1: dynamic(() => import("../components/mall_layouts/Mall_layout1.jsx"),{ssr:false}),
+      2: dynamic(() => import("../components/mall_layouts/Mall_layout2.jsx"),{ssr:false}),
+    };
+    const layoutId = loadedStores.storefronts?.length;
     const selectedLayout = layoutMap[layoutId];
-    //console.log('Selected layout:', selectedLayout);
+    
+    p(SOURCE,layoutId,srcColor,'layoutId:');
     setLayoutComponent(() => selectedLayout);
   }, [loadedStores]);
-  
-//////////////////////////////////////////
 
-useEffect(() => {
-    console.log({LayoutComponent})
 
+  useEffect(() => {
+    p(SOURCE,LayoutComponent,srcColor,'layoutComponent:');
   }, [LayoutComponent]);
-
   
-
 /////////////////////////////////////////////////////
 
-  // useEffect(() => {
-  //   if(storefronts){setWelcomeModalIsOpen(true);}
+  useEffect(() => {
+    //if(storefronts){setWelcomeModalIsOpen(true);}
 
-  // }, [storefronts]);
+  }, [storefronts]);
 
-  ///////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
 
   return (
     <>
@@ -104,6 +100,9 @@ useEffect(() => {
         </Portal>
       )}
       <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading search params...</div>}>
+          <InfoDisplay />
+        </Suspense>
         <div style={{ width: "100vw", height: "100vh" }}>
           <Canvas camera={{ position: [5, 2.25, 20], fov: 45 }}>
             <ambientLight />
@@ -112,13 +111,22 @@ useEffect(() => {
               {LayoutComponent && <LayoutComponent key="layout" storefronts={loadedStores} />}
             </Suspense>
           </Canvas>
-          <InfoDisplay />
         </div>
       </Suspense>
     </>
   );
 }
-export default RenderPage;
+// export default RenderPage;
+
+export default function RenderPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RenderPage />
+    </Suspense>
+  );
+}
+
+/////////////////////////////////////////////////////////////////
 
 function InfoDisplay() {
   const searchParams = useSearchParams();
@@ -134,3 +142,4 @@ function InfoDisplay() {
     </>
   );
 }
+
