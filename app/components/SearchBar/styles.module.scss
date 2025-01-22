@@ -7,7 +7,7 @@
     @apply relative inline-flex justify-normal text-xl border-2 rounded-md;
     @at-root{
         .inputBox{
-            @apply w-80 h-11 text-2xl text-center text-black;
+            @apply w-80 h-11 text-2xl font-bold text-center text-[var(--blueSpot)];
             
         }
         .inputIcon{

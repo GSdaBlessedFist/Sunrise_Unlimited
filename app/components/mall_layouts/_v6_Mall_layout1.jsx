@@ -1,24 +1,17 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { useGLTF,PerspectiveCamera,useTexture } from '@react-three/drei'
-import { useThree,invalidate } from '@react-three/fiber';
-import * as THREE from "three";
-import {Leva,LevaRoot,useControls} from "leva";
-import '../../lib/extendThree';
+import { useThree } from '@react-three/fiber';
 import { gsap } from "gsap";
-import { useCamera } from '../../Providers/CameraProvider';
 import { loadStorefrontComponents } from '../../lib/loadStorefrontComponents';
 import { useStorefront } from '../../Providers/StorefrontProvider';
 import p from '../../helpers/consoleHelper';
 import Tablet from '../Message_Tablet/Tablet';
-import ActionMarker from "../ActionMarker/ActionMarker";
-import {useEntryDoorsAction}  from '../../Providers/EntryDoorsProvider';
 
 const SOURCE = "Mall Layout ";
 const srcColor = 100;
 
 export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
-  const { scene,nodes, materials,cameras } = useGLTF('/models/mall_layout1.glb');
-  const {welcomeIsOpen,slidingDoorsOpen,handleSlidingDoors} = useEntryDoorsAction();
+  const { scene,nodes, materials,cameras } = useGLTF('/models/mall_layout1.glb')
   const [loadedComponents, setLoadedComponents] = useState([]);
   //const [plotPosition, setPlotPosition] = useState([0, 0, 0]);
   const { set } = useThree();
@@ -29,30 +22,15 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   const entryCameraRef = useRef();
   const bigScreenCameraRef = useRef();
   const [transitionComplete, setTransitionComplete] = useState(false);
-  const { activeCamera } = useCamera();
-  
-  const entrySlidedoorLeftRef = useRef();
-  const entrySlidedoorRightRef = useRef();
-  const enterActionRef = useRef();
-  
-  
-  const personRef = useRef();
-  const bigScreenRef = useRef();
+
+  const entranceSlidingGlassLeft = useRef();
+  const entranceSlidingGlassRight = useRef();
 
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
+  ///////////////TEXTURES///////////////////////////////////
   
-  const handleEnterActionMarkerClick = () => {
-    if(transitionComplete){
-      const leftDoorPos = entrySlidedoorLeftRef.current.position;
-      const rightDoorPos = entrySlidedoorRightRef.current.position;
-      gsap.to(leftDoorPos,{x:-1,duration: 3.5})
-      gsap.to(rightDoorPos,{x:1,duration: 3.5},"<")
-      handleSlidingDoors(true)
-    }   
-  };
 
-  
   
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
@@ -73,7 +51,6 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   },
   [storefronts])
 
-  //Loading storefronts
   useEffect(() => {
     if (storefronts && storefronts.length !== 0) {
       const loadComponents = async () => {
@@ -85,66 +62,49 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
     }
   }, [storefronts]);
 
+  useEffect(() => {
+    //p(SOURCE,loadedComponents,srcColor + 10,"loadedComponents:") 
+  }, [loadedComponents]);
+
   //EntryCamera transition logic
   useEffect(() => {
     if (!transitionComplete && entryCameraRef.current) {
       const camera = entryCameraRef.current;
-      console.log(camera);
+  
       // Animate the position
       gsap.to(camera.position, {
         duration: 4.5,
         x: 0,
-        y: 1.676,
-        // z: 23.356,
-        z: 23,
+        y: 1.829,
+        z: 19.75,
         ease: "power4.out",
         onComplete: () => setTransitionComplete(true),
       });
   
       // Animate the FOV
-      // gsap.from(camera, {
-      //   duration: 4.5,
-      //   fov: 65,
-      //   ease: "power4.out",
-      //   onUpdate: () => {
-      //     camera.updateProjectionMatrix(); // Ensure the FOV change is applied
-      //   },
-      // });
+      gsap.from(camera, {
+        duration: 4.5,
+        fov: 65,
+        ease: "power4.out",
+        onUpdate: () => {
+          camera.updateProjectionMatrix(); // Ensure the FOV change is applied
+        },
+      });
     }
   }, [transitionComplete]);
 
-  
-  //Camera switching
-  useEffect(() => {
-    if (activeCamera) {
-      if (activeCamera === "entry_Camera" && entryCameraRef.current) {
-        set({ camera: entryCameraRef.current });
-      } else if (activeCamera === "big-screens_Camera" && bigScreenCameraRef.current) {
-        set({ camera: bigScreenCameraRef.current });
-  
-        
-                
-      }
-    }
-  }, [activeCamera, set, bigScreenCameraRef, bigScreenRef, entryCameraRef]);
-
   useEffect(()=>{
-    if(entrySlidedoorLeftRef.current){
-      console.log(entrySlidedoorLeftRef.current.children[0].material)
-    }
-  },[])
+    p(SOURCE,materials,srcColor,"materials:")
+  },[]);
+
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////// 
 
-  return (<>
-    {!welcomeIsOpen && transitionComplete && !slidingDoorsOpen?(
-      <ActionMarker ref={enterActionRef} position={[0, 2, 0]} onClick={handleEnterActionMarkerClick} label={"Enter"} />
-    ):null}
+  return (
     <group {...props} dispose={null}>
-      
       <group name="Scene">
-        <group name="downTheMiddleEMPTY-2nd_floor" />
+        <group name="downTheMiddleEMPTY-2nd_floor" position={[0, -2.289, 0]} />
         <group name="downTheMiddleEMPTY" position={[0, 2, 0]} />
         {/* <group name="TABLET" position={[-1.303, 1.045, 6.298]} rotation={[0, Math.PI / 2, 0]}>
           <group name="tablet_stand" position={[0, -0.093, 0]} scale={1.25}>
@@ -158,27 +118,26 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
             <mesh name="tablet-stand004_1" geometry={nodes['tablet-stand004_1'].geometry} material={materials.tablet_screen} />
             <mesh name="tablet-stand004_2" geometry={nodes['tablet-stand004_2'].geometry} material={materials.tablet_borderLighting} />
           </group>
-        </group> 
         </group> */}
         {/* <Tablet position={[0, 0.001, 0]} /> */}
         <group name="frontArea" position={[0.119, 4.155, 6.876]} rotation={[-0.918, 0, 0]} />
-        <spotLight intensity={20311.125} angle={0.454} penumbra={0.686} decay={2} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot001.target}>
+        <spotLight intensity={20311.125} angle={0.454} penumbra={0.686} decay={2} position={[-2.406, -0.722, -3.848]} rotation={[-Math.PI / 2, 0, -0.262]} scale={[0.425, 0.425, 0.465]} target={nodes.Spot001.target}>
           <primitive object={nodes.Spot001.target} position={[0, 0, -1]} />
         </spotLight>
-        <spotLight intensity={27175.707} angle={0.436} penumbra={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot002.target}>
+        <spotLight intensity={27175.707} angle={0.436} penumbra={0.15} decay={2} position={[2.764, -0.722, -3.848]} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot002.target}>
           <primitive object={nodes.Spot002.target} position={[0, 0, -1]} />
         </spotLight>
-        <spotLight intensity={27175.707} angle={0.436} penumbra={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot003.target}>
+        <spotLight intensity={27175.707} angle={0.436} penumbra={0.15} decay={2} position={[-2.406, -0.722, 1.055]} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot003.target}>
           <primitive object={nodes.Spot003.target} position={[0, 0, -1]} />
         </spotLight>
-        <spotLight intensity={27175.707} angle={0.436} penumbra={0.15} decay={2} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot004.target}>
+        <spotLight intensity={27175.707} angle={0.436} penumbra={0.15} decay={2} position={[2.764, -0.722, 1.055]} rotation={[-Math.PI / 2, 0, 0]} target={nodes.Spot004.target}>
           <primitive object={nodes.Spot004.target} position={[0, 0, -1]} />
         </spotLight>
         <spotLight intensity={5321.003} angle={0.528} penumbra={0.15} decay={2} position={[8.386, 3.19, -0.708]} rotation={[-0.697, 0.62, -0.401]} target={nodes.Spot.target}>
           <primitive object={nodes.Spot.target} position={[0, 0, -1]} />
         </spotLight>
-        <PerspectiveCamera ref={entryCameraRef} name="entry_Camera" makeDefault={activeCamera === "entry_Camera"} far={1000} near={0.1} fov={22.895} position={[0.001, 1.65, 23.286]} rotation={[0.015, 0, 0]} />
-        <PerspectiveCamera ref={bigScreenCameraRef} name="big-screens_Camera" makeDefault={activeCamera === "big-screens_Camera"} far={1000} near={0.1} fov={32.269} position={[-10.889, -0.406, 1.278]} rotation={[2.99, -0.363, 3.124]} />
+        <PerspectiveCamera name="big-screens_Camera" makeDefault={true} far={1000} near={0.1} fov={33.166} position={[0.09, 2.374, 29.916]} rotation={[-0.441, -0.137, -0.064]} />
+        <PerspectiveCamera ref={entryCameraRef} name="entry_Camera" makeDefault={false} far={1000} near={0.1} fov={22.895} position={[-0.003, 1.829, 18.553]} />
         <group name="stairs">
           <mesh name="Plane001" geometry={nodes.Plane001.geometry} material={materials.mall_stair_basic} />
           <mesh name="Plane001_1" geometry={nodes.Plane001_1.geometry} material={materials.mall_stairRails_bars} />
@@ -187,13 +146,13 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <mesh name="Plane001_4" geometry={nodes.Plane001_4.geometry} material={materials.mall_seeThru_divider} />
           <mesh name="Plane001_5" geometry={nodes.Plane001_5.geometry} material={materials.mall_stairs_side} />
         </group>
-        <mesh ref={bigScreenRef} name="mall_bigScreen" geometry={nodes.mall_bigScreen.geometry} material={materials.mall_bigScreen} position={[-7.356, 3.537, 18.399]} rotation={[Math.PI / 2, 0, 0]} scale={[10.567, 7.193, 6.376]} />
-          <mesh ref={plotRef} name="mall_storefront_plot" geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
-            <Suspense fallback={<div>Loading storefronts...</div>}>
-              {loadedComponents.map(({ id, Component, componentPath }) => (
-                <Component key={id} position={plotPositions} />
-              ))}
-            </Suspense>
+        <mesh name="mall_bigScreen" geometry={nodes.mall_bigScreen.geometry} material={materials.mall_bigScreen} position={[-7.356, 3.537, 18.399]} rotation={[Math.PI / 2, 0, 0]} scale={[10.567, 7.193, 6.376]} />
+        <mesh ref={plotRef} name="mall_storefront_plot" geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
+        <Suspense fallback={<div>Loading storefronts...</div>}>
+          {loadedComponents.map(({ id, Component, componentPath }) => (
+            <Component key={id} position={plotPositions} />
+          ))}
+        </Suspense>
         {/* <mesh name="STOREPLACEHOLDER" geometry={nodes.STOREPLACEHOLDER.geometry} material={materials.storefrontplaceholder} position={[0.004, 0.006, 0]} /> */}
         <group name="person-placehlder" position={[-10.935, -1.187, 1.009]} rotation={[Math.PI, -0.531, Math.PI]}>
           <mesh name="human_block001" geometry={nodes.human_block001.geometry} material={materials['storefront_displaycase-baseColor.001']} />
@@ -233,21 +192,15 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <mesh name="Plane002_2" geometry={nodes.Plane002_2.geometry} material={materials.mall_guardWalls_top} />
         </group>
         <mesh name="mall_floor_firstFloor-walls" geometry={nodes['mall_floor_firstFloor-walls'].geometry} material={materials.mall_wall_basic} />
-        <mesh name="mall_entranceSensor" geometry={nodes.mall_entranceSensor.geometry} material={nodes.mall_entranceSensor.material} />
         <mesh name="mall_entrySlidedoor_frame" geometry={nodes.mall_entrySlidedoor_frame.geometry} material={materials.mall_entrySlidingdoor_border} position={[0, 0.229, 18.445]} scale={[3.75, 0.75, 0.75]} />
-        <group ref={entrySlidedoorLeftRef} name="mall_entrySlidedoor-glass_Left" position={[0, 1.236, 18.628]} scale={[3.75, 0.761, 0.75]}>
-          <mesh name="mall_entrySlidedoor-glass_Left_1" geometry={nodes['mall_entrySlidedoor-glass_Left_1'].geometry} material={materials.mall_entrySLidingdoor_glassWlogo} />
-          <mesh name="mall_entrySlidedoor-glass_Left_2" geometry={nodes['mall_entrySlidedoor-glass_Left_2'].geometry} material={materials.mall_entrySlidingdoor_border} />
-          <mesh name="mall_entrySlidedoor-glass_Left_3" geometry={nodes['mall_entrySlidedoor-glass_Left_3'].geometry} material={materials.mall_entrySLidingdoor_glassWlogo} />
+        <group name="mall_entrySlidedoor_glass" position={[0, 1.236, 18.628]} scale={[3.75, 0.761, 0.75]}>
+          <mesh name="Cube006" geometry={nodes.Cube006.geometry} material={materials.mall_entrySlidingdoor_glass} />
+          <mesh name="Cube006_1" geometry={nodes.Cube006_1.geometry} material={materials.mall_entrySlidingdoor_border} />
         </group>
-        <group ref={entrySlidedoorRightRef} name="mall_entrySlidedoor-glass_Right" position={[0, 1.236, 18.628]} scale={[3.75, 0.761, 0.75]}>
-          <mesh name="mall_entrySlidedoor-glass_Right_1" geometry={nodes['mall_entrySlidedoor-glass_Right_1'].geometry} material={materials.mall_entrySLidingdoor_glassWlogo} />
-          <mesh name="mall_entrySlidedoor-glass_Right_2" geometry={nodes['mall_entrySlidedoor-glass_Right_2'].geometry} material={materials.mall_entrySlidingdoor_border} />
-        </group>
-        <mesh name="mall_building_walls" geometry={nodes.mall_building_walls.geometry} material={materials.mall_building_walls} position={[0, 0, 0.056]} />
+        {/* <mesh name="mall_buidling_walls" geometry={nodes.mall_buidling_walls.geometry} material={materials.mall_building_walls} /> */}
       </group>
     </group>
-  </>)
+  )
 }
 
 useGLTF.preload('/mall_layout1.glb')

@@ -1,7 +1,7 @@
 @import "../../../mixins.scss";
 
 .welcomeModalContainer{
-    @apply absolute flex flex-col justify-center items-center border-8 border-[#869bf1] py-5 px-8 rounded-md ;
+    @apply absolute flex flex-col justify-center items-center border-8 border-[#869bf1] py-5 px-8 rounded-md z-[500];
     user-select: none;
     &::before{
         content:"";

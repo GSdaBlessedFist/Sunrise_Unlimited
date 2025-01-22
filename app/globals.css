@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 :root{
-  --baseBackground: #0e0d20;
+  --baseBackground: #141414ff;
+  --blueSpot: #4257ffff;
+  --blueSpotLight: #6373ffff;
+  --blueSpotDark: #24246bff;
+
+  --headerFooterHeight: 90;
 }
 
 body{

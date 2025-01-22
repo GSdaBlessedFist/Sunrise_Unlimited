@@ -8,7 +8,7 @@ import p from '../helpers/consoleHelper';
  * @returns {Promise<Array>} - A promise that resolves to an array of loaded components.
  */
 
-const SOURCE = "loadStorefrontComponents";
+const SOURCE = "loadStorefrontComponents off";
 const srcColor = 115;
 
 

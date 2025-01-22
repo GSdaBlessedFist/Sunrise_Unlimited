@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 import styles from "./welcomeModal.module.scss";
 import { FaSearch } from "react-icons/fa";
 import CloseButton from "../CloseButton";
+import { useEntryDoorsAction } from "../../Providers/EntryDoorsProvider";
 
 function WelcomeModal({userInfo}) {
 
-    const [isOpen, setIsOpen] = useState(true);
+    // const [isOpen, setIsOpen] = useState(true);
     const [modalContent,setModalContent] = useState(null);
+    const {welcomeIsOpen,setWelcomeIsOpen,handleSlidingDoors} = useEntryDoorsAction()
 
+    const handleClose = () => {
+      setWelcomeIsOpen(false); // Close the modal
+      
+    };
 
-
+    ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
+    //WelcomeModal content selection
     useEffect(() => {
         switch (userInfo.userType) {
           case "guest":
@@ -55,13 +63,16 @@ function WelcomeModal({userInfo}) {
         
     },[userInfo.screenName,userInfo.userType]);
 
+    ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
+
     return (<>
-        {isOpen && 
+        {welcomeIsOpen && 
             <div id="shaderBG" className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center"
                 style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
             <div className={styles.welcomeModalContainer}>
                 <div className="ml-auto w-5 h-5 scale-75">
-                    <CloseButton setIsOpen={setIsOpen}/>
+                    <CloseButton setIsOpen={setWelcomeIsOpen} onClick={handleClose}/>
                 </div>
               <div>{modalContent}</div>
             </div>

@@ -1,5 +1,7 @@
 "use client"
-import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation'; 
+import styles from "../styles.module.scss";
+import Image from 'next/image';
 
 const Header = ({height}) => {
   const pathname = usePathname();
@@ -9,19 +11,36 @@ const Header = ({height}) => {
   const renderHeaderContent = () => {
     switch (pathname) {
         case '/':
-          return <h1>Welcome to Sunrise Unlimited!</h1>;
+          // return <h1>Welcome to Sunrise Unlimited!</h1>;
+          return null;
         case '/inside':
           return <h1>inside controls</h1>;
         default:
-          return <h1>Default Header</h1>;
+          return (<>
+            
+              <MallSpaceHeaderUI/>
+            
+          </>)
       }
   };
 
   return (
-    <header style={{height:height}} className="w-full flex justify-center items-center border-b-4 border-b-white">
+    <header style={{height:height,border:(pathname ==="/"?"none":"")}} className={styles.header}>
         {renderHeaderContent()}
     </header>
   );
 };
 
 export default Header;
+
+
+function MallSpaceHeaderUI() {
+  return (
+    <div className={styles.mallSpaceHeaderUI}>
+        <a href='/'>
+          <Image src={"/assets/logo(blue-sansBorder).png"} style={{transform:"scale(.28)"}} width={763} height={336} alt="Sunrise Unlimited logo"/>
+        </a>
+        
+    </div>
+  );
+}

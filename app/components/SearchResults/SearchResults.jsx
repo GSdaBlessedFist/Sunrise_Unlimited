@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useStorefront } from '../../Providers/StorefrontProvider'; 
 import p from "../../helpers/consoleHelper";
 
-const SOURCE = "SearchResults ";
+const SOURCE = "SearchResults off";
 const srcColor = 56;
 function SearchResults({query,searchPerformed}) {
     

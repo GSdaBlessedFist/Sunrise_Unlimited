@@ -1,8 +1,9 @@
-function CloseButton({setIsOpen}) {
+function CloseButton({setIsOpen,onClick}) {
 
 
     function handleClose(){
         setIsOpen(false);
+        if (onClick) onClick();
     }
 
     return (

@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
+import React, { use, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
+import { OrbitControls} from "@react-three/drei"
 import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useStorefront } from "../Providers/StorefrontProvider";
@@ -23,6 +24,9 @@ function RenderPage() {
   const [loadedComponents, setLoadedComponents] = useState([]);
   const [LayoutComponent, setLayoutComponent] = useState(null);
   const [welcomeModalIsOpen, setWelcomeModalIsOpen] = useState(null);
+  const [enterLayout,setEnterLayout] = useState(false);
+  const searchParams = useSearchParams();
+
 
   // userInfo.userType options:  "guest","member","creator","storeowner";
 
@@ -30,7 +34,8 @@ function RenderPage() {
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
-  const searchParams = useSearchParams();
+
+  //fetching StorefrontData
   useEffect(() => {
     const query = searchParams.get("query");
   
@@ -53,7 +58,6 @@ function RenderPage() {
     }
   }, [loadedStores,storefronts, searchParams]);
   
-  //////////////////////////////////////////
   useEffect(() => {
     var initial = 0;
     loadedStores.storefronts?.forEach((store,index) =>{
@@ -61,7 +65,6 @@ function RenderPage() {
       initial += 10;
     })
   },[loadedStores]);
-  //////////////////////////////////////////
 
   /*Loading the Layouts*/
   useEffect(() => {
@@ -76,17 +79,17 @@ function RenderPage() {
     setLayoutComponent(() => selectedLayout);
   }, [loadedStores]);
 
-
   useEffect(() => {
     p(SOURCE,LayoutComponent,srcColor,'layoutComponent:');
   }, [LayoutComponent]);
-  
-/////////////////////////////////////////////////////
 
   useEffect(() => {
-    //if(storefronts){setWelcomeModalIsOpen(true);}
-
+    if(storefronts){
+      setWelcomeModalIsOpen(true);
+    }
   }, [storefronts]);
+
+  
 
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
@@ -101,14 +104,16 @@ function RenderPage() {
       )}
       <Suspense fallback={<div>Loading...</div>}>
         <Suspense fallback={<div>Loading search params...</div>}>
-          <InfoDisplay />
+          {/* <InfoDisplay /> */}
         </Suspense>
-        <div style={{ width: "100vw", height: "100vh" }}>
-          <Canvas camera={{ position: [5, 2.25, 20], fov: 45 }}>
+        <div style={{ width: "100vw", height: "100vh"}}>
+          {/* <Canvas ref={cameraRef} camera={{ position: [0, 1.829, 18.206], fov: 45 }}> */}
+          <Canvas shadows>
+            {/* <OrbitControls/> */}
             <ambientLight />
-            <directionalLight intensity={0.5} />
+            <directionalLight intensity={0.5} castShadow/>
             <Suspense fallback={null}>
-              {LayoutComponent && <LayoutComponent key="layout" storefronts={loadedStores} />}
+              {LayoutComponent && <LayoutComponent key="layout" enterLayout={enterLayout} storefronts={loadedStores} />}
             </Suspense>
           </Canvas>
         </div>

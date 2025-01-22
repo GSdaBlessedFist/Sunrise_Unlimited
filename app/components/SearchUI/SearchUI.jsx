@@ -6,6 +6,7 @@ import TagRow from "../TagRow/TagRow";
 import styles from "./styles.module.scss";
 import { useStorefront } from "../../Providers/StorefrontProvider";
 import p from "../../helpers/consoleHelper";
+import Image from "next/image";
 //@ p = function (sourceName,data, hue=25, variableName="")
 
 const SOURCE = "SearchUI off";
@@ -36,8 +37,12 @@ function SearchUI() {
 //////////////////////////////////////////////////
 
 
-    return (
-      <div id="search-ui" className={styles.searchUI}>
+    return (<>
+      <div className="mx-auto w-full flex-col justify-center items-center">
+        <div className="my-8 w-full flex justify-center items-center ">
+          <Image src={"/assets/logo(blue).png"} style={{transform:"scale(.8)",pointerEvents: "none"}} width={763} height={336} alt="Sunrise Unlimited logo"/>
+        </div>
+        <div id="search-ui"  className={styles.searchUI}>
         <SearchBar 
           query={query} 
           setQuery={setQuery} 
@@ -52,7 +57,8 @@ function SearchUI() {
         />
         <SearchResults query={query} searchPerformed={searchPerformed}/>
       </div>
-    );
+      </div>
+      </>);
 }
 
 export default SearchUI;

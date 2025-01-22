@@ -1,0 +1,47 @@
+@import "./../../mixins.scss";
+
+.uiGrid{
+    @apply grid w-full h-screen overflow-hidden;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: calc(var(--headerFooterHeight) * 1px) calc(100vh - (var(--headerFooterHeight)*2)* 1px) calc(var(--headerFooterHeight) * 1px);
+    grid-template-areas: "header header header"
+                         "left-panel main right-panel"
+                         "footer footer footer";
+    @include b();
+}
+.hidden{
+    display: none;
+}
+
+.header {
+    grid-area: header;
+    @apply w-full  flex justify-center items-center border-b-4 border-[var(--blueSpot)];
+}
+.mallSpaceHeaderUI{
+    @apply w-full h-full flex justify-center items-center ; 
+}
+.leftPanel{
+    grid-area: left-panel;
+    @apply w-full flex flex-col justify-center items-center bg-[var(--blueSpotDark)] overflow-hidden;
+    @at-root{
+        .mallSpaceLeftPanelItem{
+            @apply my-2 w-40 text-center text-xl p-4 border;
+        }
+    }
+}
+.main{
+    @apply w-full  bg-[var(--baseBackground)] flex justify-center items-center overflow-hidden;
+}
+.rightPanel{
+    grid-area: right-panel;
+    @apply w-full flex flex-col justify-center items-center overflow-hidden;
+    @at-root{
+        .mallSpaceLeftPanelItem{
+            @apply my-2 w-40 text-center text-xl p-4 border;
+        }
+    }
+}
+.footer{
+    grid-area: footer;
+    @apply fixed bottom-0  w-full flex justify-center items-center border-t-4 border-t-white;
+}

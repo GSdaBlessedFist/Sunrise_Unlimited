@@ -1,5 +1,6 @@
 "use client"
 import { usePathname } from 'next/navigation';
+import styles from "../styles.module.scss";
 
 const Footer = ({height}) => {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ const Footer = ({height}) => {
   };
 
   return (
-    <footer style={{height:height}} className="fixed bottom-0  w-full flex justify-center items-center border-t-4 border-t-white">
+    <footer style={{height:height}} className={styles.footer}>
         {renderFooterContent()}
     </footer>
   );
