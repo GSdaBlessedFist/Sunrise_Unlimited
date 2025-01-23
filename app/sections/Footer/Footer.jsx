@@ -10,7 +10,7 @@ const Footer = ({height}) => {
   const renderFooterContent = () => {
     switch (pathname) {
         case '/':
-          return <h1>Sunrise Unlimited!</h1>;
+          return null;
         case '/inside':
           return <h1>inside controls</h1>;
         default:
@@ -19,7 +19,7 @@ const Footer = ({height}) => {
   };
 
   return (
-    <footer style={{height:height}} className={styles.footer}>
+    <footer style={{height:height,border:(pathname==="/"?"none":"")}} className={styles.footer}>
         {renderFooterContent()}
     </footer>
   );

@@ -7,8 +7,10 @@
   --blueSpot: #4257ffff;
   --blueSpotLight: #6373ffff;
   --blueSpotDark: #24246bff;
+  --greenSpot: #62bb53ff;
 
   --headerFooterHeight: 90;
+  /* --visitorPostsSectionHeight: 0; */
 }
 
 body{

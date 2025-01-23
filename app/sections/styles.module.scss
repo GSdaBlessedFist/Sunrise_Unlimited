@@ -2,12 +2,12 @@
 
 .uiGrid{
     @apply grid w-full h-screen overflow-hidden;
-    grid-template-columns: 200px 1fr 200px;
+    grid-template-columns: 225px 1fr 225px;
     grid-template-rows: calc(var(--headerFooterHeight) * 1px) calc(100vh - (var(--headerFooterHeight)*2)* 1px) calc(var(--headerFooterHeight) * 1px);
     grid-template-areas: "header header header"
                          "left-panel main right-panel"
                          "footer footer footer";
-    @include b();
+    // @include b();
 }
 .hidden{
     display: none;
@@ -20,12 +20,20 @@
 .mallSpaceHeaderUI{
     @apply w-full h-full flex justify-center items-center ; 
 }
+.uiButton{
+    @apply w-full p-2 text-center bg-transparent rounded-lg hover:bg-[var(--blueSpot)] my-1;
+}
 .leftPanel{
     grid-area: left-panel;
     @apply w-full flex flex-col justify-center items-center bg-[var(--blueSpotDark)] overflow-hidden;
     @at-root{
+        .navigationSection{
+            @apply h-fit overflow-hidden border-4 border-[var(--blueSpotLight)] p-2;
+            //@include b();
+        }
         .mallSpaceLeftPanelItem{
-            @apply my-2 w-40 text-center text-xl p-4 border;
+            @apply my-2 w-full text-center text-xl bg-transparent rounded-lg  p-2;
+            @include b();
         }
     }
 }
@@ -34,12 +42,60 @@
 }
 .rightPanel{
     grid-area: right-panel;
-    @apply w-full flex flex-col justify-center items-center overflow-hidden;
+    @apply w-full flex flex-col justify-center items-center overflow-y-hidden;
     @at-root{
-        .mallSpaceLeftPanelItem{
-            @apply my-2 w-40 text-center text-xl p-4 border;
+        .mallSpaceRightPanelItem{
+            @apply my-2 w-full text-left text-xl font-bold p-2 overflow-auto ;
+           @include b();
+        }
+        // VISITOR LOG
+        .visitorLogSection{
+            @apply h-fit overflow-hidden border-4 border-[var(--blueSpotLight)] p-2;
+            //@include b();
+        }
+        .visitorLogPosts{
+            @apply h-[0px] bg-[var(--baseBackground)] ;
+            scroll-behavior: smooth;
+        }
+        .visitorLogPostItem{
+            @apply  bg-[var(--blueSpotDark)] border-b-2 border-b-[var(--blueSpotLight)] p-2 my-2;
+        }
+        .visitorLogEmoji{
+            @apply scale-150 opacity-50 absolute right-2;
+        }
+        // SIGN IN
+        .signInSection{
+            @apply h-fit overflow-hidden  p-2;
+            //@include b();
+        }
+        .signInForm{
+            @apply w-full;
+        }
+        .emojiRow{
+            @apply w-full flex justify-center items-center p-2;
+            span{
+                @apply mx-2 scale-125 cursor-pointer;
+            }
+        }
+        .signInInput{
+            @apply mx-auto w-full;
+            & input{
+                @apply text-[var(--blueSpotDark)] px-2;
+            }
+            & label{
+                @apply text-[var(--blueSpotLight)];
+            }
         }
     }
+}
+.scrollContainer {
+    background: var(--baseBackground);
+    overflow-y: auto; /* Ensure scrolling works */
+  }
+  
+.scrollContainer::-webkit-scrollbar {
+    width: 2px; /* Adjust width as needed */ 
+    height: 2px;
 }
 .footer{
     grid-area: footer;

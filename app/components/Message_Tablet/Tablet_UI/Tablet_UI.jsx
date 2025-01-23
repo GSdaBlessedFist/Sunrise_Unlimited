@@ -213,8 +213,8 @@ const VisitorLogPostItem = ({ name, message, orientation = 0 }) => {
           {name}
           <span className='font-normal opacity-70'>&nbsp;says:</span>
         </div>
-        <div className=' '>
-          <span className='italic text-xl'>"{message}"</span>
+        <div >
+          <span className='italic text-xl'>&quot;{message}&quot;</span>
         </div>
       </div>
       <div className={styles.visitorLogPostItemEmojiSection}>b</div>

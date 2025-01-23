@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
     return () => {
       window.removeEventListener('resize', updateHeight); // Cleanup listener on unmount
     };
-  }, []);
+  }, [headerFooterHeight]);
 
   return (
     <html lang="en">

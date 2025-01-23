@@ -24,15 +24,19 @@ function LeftPanel() {
 
       return (
         <>
-          {storefronts.length > 1 ? (
-            <div className={styles.mallSpaceLeftPanelItem}>Load more...</div>
-          ):null}
-          <button onClick={() => changeCamera("gamePad_Camera")} className={styles.mallSpaceLeftPanelItem} >
-            Game Pad
-          </button>
-          <button onClick={() => changeCamera("big-screens_Camera")} className={styles.mallSpaceLeftPanelItem} >
-            Big Screen
-          </button>
+          <div className={styles.mallSpaceLeftPanelItem }>
+            <div className={styles.navigationSection}>
+            {storefronts.length > 1 ? (
+              <div className={styles.uiButton}>Load more...</div>
+            ):null}
+            <button onClick={() => changeCamera("gamePad_Camera")} className={styles.uiButton} >
+              Game Pad
+            </button>
+            <button onClick={() => changeCamera("big-screens_Camera")} className={styles.uiButton} >
+              Big Screen
+            </button>
+            </div>
+          </div>
         </>
       );
     } else {

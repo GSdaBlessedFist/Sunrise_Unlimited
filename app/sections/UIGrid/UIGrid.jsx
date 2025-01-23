@@ -17,7 +17,7 @@ function UIGrid({children,height}) {
     useEffect(() => {
         p(SOURCE,height,srcColor,"headerFooterHeight:")
         
-    },[])
+    },[height])
     return (
         <div className={styles.uiGrid}>
             <Header height={height}/>
