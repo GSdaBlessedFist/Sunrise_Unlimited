@@ -39,7 +39,7 @@ const CustomScrollbar = ({ children }) => {
         (container.clientHeight / container.scrollHeight) * container.clientHeight
       );
     }
-  }, [containerRef.current]); 
+  }, []); 
 
   const handleScroll = () => {
     const container = containerRef.current; // Get the container within the handler

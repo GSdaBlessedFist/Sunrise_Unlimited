@@ -1,7 +1,7 @@
 @import "../../../mixins.scss";
 
 .tagRow{
-    @apply w-1/3  flex justify-center items-center flex-wrap ;
+    @apply w-2/3  flex justify-center items-center flex-wrap ;
 }
 .tagButton{
     @apply px-4 py-2 border-[3px] border-white rounded-3xl m-2 hover:border-[var(--blueSpot)];

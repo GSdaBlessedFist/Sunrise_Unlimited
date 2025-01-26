@@ -6,7 +6,7 @@ import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useStorefront } from "../Providers/StorefrontProvider";
 import Portal from "../components/modals/Portal";
-import WelcomeModal from "../components/modals/WelcomeModal";
+import WelcomeModal from "../components/modals/WelcomeModal/WelcomeModal";
 import { useUserInfo } from "../Providers/UserInfoProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 import p from "../helpers/consoleHelper";

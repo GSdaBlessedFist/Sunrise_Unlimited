@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./welcomeModal.module.scss";
+import styles from "./styles.module.scss";
 import { FaSearch } from "react-icons/fa";
-import CloseButton from "../CloseButton";
-import { useEntryDoorsAction } from "../../Providers/EntryDoorsProvider";
+import CloseButton from "../../CloseButton";
+import { useEntryDoorsAction } from "../../../Providers/EntryDoorsProvider";
 
 function WelcomeModal({userInfo}) {
 

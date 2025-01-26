@@ -1,8 +1,7 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import { useGLTF,PerspectiveCamera,useTexture } from '@react-three/drei'
+import { useGLTF,PerspectiveCamera,useTexture, Html } from '@react-three/drei'
 import { useThree,invalidate } from '@react-three/fiber';
 import * as THREE from "three";
-import {Leva,LevaRoot,useControls} from "leva";
 import '../../lib/extendThree';
 import { gsap } from "gsap";
 import { useCamera } from '../../Providers/CameraProvider';
@@ -12,6 +11,9 @@ import p from '../../helpers/consoleHelper';
 import Tablet from '../Message_Tablet/Tablet';
 import ActionMarker from "../ActionMarker/ActionMarker";
 import {useEntryDoorsAction}  from '../../Providers/EntryDoorsProvider';
+import WasdUIModal from "../../components/modals/wasdModal/WasdUIModal";
+import Portal from '../modals/Portal';
+import Image from 'next/image';
 
 const SOURCE = "Mall Layout ";
 const srcColor = 100;
@@ -34,7 +36,8 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   const entrySlidedoorLeftRef = useRef();
   const entrySlidedoorRightRef = useRef();
   const enterActionRef = useRef();
-  
+
+  const [isWASDModalVisible,setIsWASDModalVisible] = useState(true)
   
   const personRef = useRef();
   const bigScreenRef = useRef();
@@ -42,18 +45,22 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   
-  const handleEnterActionMarkerClick = () => {
+  function slidingDoorsAction(state=1){
+    //@state: open =1 || closed = -1
+    const leftDoorPos = entrySlidedoorLeftRef.current.position;
+    const rightDoorPos = entrySlidedoorRightRef.current.position;
+    gsap.to(leftDoorPos,{x:-1 * state,duration: 3.5})
+    gsap.to(rightDoorPos,{x:1 * state,duration: 3.5},"<")
+  }
+
+  function handleEnterActionMarkerClick(){
     if(transitionComplete){
-      const leftDoorPos = entrySlidedoorLeftRef.current.position;
-      const rightDoorPos = entrySlidedoorRightRef.current.position;
-      gsap.to(leftDoorPos,{x:-1,duration: 3.5})
-      gsap.to(rightDoorPos,{x:1,duration: 3.5},"<")
+      slidingDoorsAction(1)
       handleSlidingDoors(true)
     }   
   };
 
-  
-  
+    
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
@@ -113,17 +120,13 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
     }
   }, [transitionComplete]);
 
-  
   //Camera switching
   useEffect(() => {
     if (activeCamera) {
       if (activeCamera === "entry_Camera" && entryCameraRef.current) {
         set({ camera: entryCameraRef.current });
       } else if (activeCamera === "big-screens_Camera" && bigScreenCameraRef.current) {
-        set({ camera: bigScreenCameraRef.current });
-  
-        
-                
+        set({ camera: bigScreenCameraRef.current });     
       }
     }
   }, [activeCamera, set, bigScreenCameraRef, bigScreenRef, entryCameraRef]);
@@ -133,6 +136,12 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
       console.log(entrySlidedoorLeftRef.current.children[0].material)
     }
   },[])
+
+  useEffect(()=>{
+    if(!slidingDoorsOpen){
+      setIsWASDModalVisible(false)
+    }
+  },[slidingDoorsOpen]);
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////// 
@@ -141,6 +150,12 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
     {!welcomeIsOpen && transitionComplete && !slidingDoorsOpen?(
       <ActionMarker ref={enterActionRef} position={[0, 2, 0]} onClick={handleEnterActionMarkerClick} label={"Enter"} />
     ):null}
+    {/* {slidingDoorsOpen && isWASDModalVisible &&( */}
+    {slidingDoorsOpen && (
+      <Html position={[-.25, 3.25, -1]} fullscreen transform={true} distanceFactor={3} className='pointer-events-none relative z-50 drop-shadow-2xl' >
+        <WasdUIModal />
+      </Html>
+    )}
     <group {...props} dispose={null}>
       
       <group name="Scene">
