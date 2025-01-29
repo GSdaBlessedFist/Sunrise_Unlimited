@@ -1,11 +1,16 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const WasdUIModal = () => {
+
+const WasdUIModal = ({setActivateWASDControls}) => {
   const [wasdModalIsOpen, setWasdModalIsOpen] = useState(true);
 
+  function handleClick(){
+    setWasdModalIsOpen(false)
+    setActivateWASDControls(true);
+  }
   return wasdModalIsOpen ? (
-    <div onClick={() => setWasdModalIsOpen(false)}>
+    <div onClick={handleClick}>
       <Image
         src="/assets/wasdUI.png"
         width={474}

@@ -155,7 +155,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   // Define a small bounding box representing the camera
   const cameraBoundingBox = new THREE.Box3().setFromCenterAndSize(
     camera.position,
-    new THREE.Vector3(0.5, 4, 0.5) // Adjust these values based on the camera size
+    new THREE.Vector3(0.5, 2, 0.5) // Adjust these values based on the camera size
   );
 
   // Ensure entrance sensor has a valid bounding box
@@ -257,8 +257,8 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <primitive object={nodes.Spot.target} position={[0, 0, -1]} />
         </spotLight>
         {/* REPLACE */}
-        <PerspectiveCamera ref={entryCameraRef} name="entry_Camera" makeDefault={activeCamera === "entry_Camera"} far={1000} near={0.1} fov={22.895} position={[0.001, 1.65, 23.286]} rotation={[0.015, 0, 0]} />
-        <PerspectiveCamera ref={bigScreenCameraRef} name="big-screens_Camera" makeDefault={activeCamera === "big-screens_Camera"} far={1000} near={0.1} fov={32.269} position={[-10.889, -0.406, 1.278]} rotation={[2.99, -0.363, 3.124]} />
+                <PerspectiveCamera ref={entryCameraRef} name="entry_Camera" makeDefault={activeCamera === "entry_Camera"} far={1000} near={0.1} fov={22.895} position={[0.001, 1.65, 23.286]} rotation={[0.015, 0, 0]} />
+                <PerspectiveCamera ref={bigScreenCameraRef} name="big-screens_Camera" makeDefault={activeCamera === "big-screens_Camera"} far={1000} near={0.1} fov={32.269} position={[-10.889, -0.406, 1.278]} rotation={[2.99, -0.363, 3.124]} />
         <group name="stairs">
           <mesh name="Plane001" geometry={nodes.Plane001.geometry} material={materials.mall_stair_basic} />
           <mesh name="Plane001_1" geometry={nodes.Plane001_1.geometry} material={materials.mall_stairRails_bars} />
@@ -268,13 +268,13 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <mesh name="Plane001_5" geometry={nodes.Plane001_5.geometry} material={materials.mall_stairs_side} />
         </group>
         {/* REPLACE */}
-        <mesh ref={bigScreenRef} name="mall_bigScreen" geometry={nodes.mall_bigScreen.geometry} material={materials.mall_bigScreen} position={[-7.356, 3.537, 18.399]} rotation={[Math.PI / 2, 0, 0]} scale={[10.567, 7.193, 6.376]} />
-          <mesh ref={plotRef} name="mall_storefront_plot" geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
-            <Suspense fallback={<div>Loading storefronts...</div>}>
-              {loadedComponents.map(({ id, Component, componentPath }) => (
-                <Component key={id} position={plotPositions} />
-              ))}
-            </Suspense>
+                <mesh ref={bigScreenRef} name="mall_bigScreen" geometry={nodes.mall_bigScreen.geometry} material={materials.mall_bigScreen} position={[-7.356, 3.537, 18.399]} rotation={[Math.PI / 2, 0, 0]} scale={[10.567, 7.193, 6.376]} />
+                  <mesh ref={plotRef} name="mall_storefront_plot" geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
+                    <Suspense fallback={<div>Loading storefronts...</div>}>
+                      {loadedComponents.map(({ id, Component, componentPath }) => (
+                        <Component key={id} position={plotPositions} />
+                      ))}
+                    </Suspense>
         {/* <mesh name="STOREPLACEHOLDER" geometry={nodes.STOREPLACEHOLDER.geometry} material={materials.storefrontplaceholder} position={[0.004, 0.006, 0]} /> */}
         <group name="person-placehlder" position={[-10.935, -1.187, 1.009]} rotation={[Math.PI, -0.531, Math.PI]}>
           <mesh name="human_block001" geometry={nodes.human_block001.geometry} material={materials['storefront_displaycase-baseColor.001']} />
@@ -315,7 +315,11 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
         </group>
         <mesh name="mall_floor_firstFloor-walls" geometry={nodes['mall_floor_firstFloor-walls'].geometry} material={materials.mall_wall_basic} />
         {/* ADD SENSOR REF */}
-        <mesh ref={entranceSensorRef} name="mall_entranceSensor" geometry={nodes.mall_entranceSensor.geometry} material={nodes.mall_entranceSensor.material} position={[0, 0.013, 0]} />
+        {/* REPLACE */}
+        {/* <mesh ref={entranceSensorRef} name="mall_entranceSensor" geometry={nodes.mall_entranceSensor.geometry} material={nodes.mall_entranceSensor.material} /> */}
+        <mesh ref={entranceSensorRef} name="mall_entranceSensor" geometry={nodes.mall_entranceSensor.geometry} position={[0, 0.914, 0]}>
+          <meshStandardMaterial color={"#4556ff"}/>
+        </mesh>
         <mesh name="mall_entrySlidedoor_frame" geometry={nodes.mall_entrySlidedoor_frame.geometry} material={materials.mall_entrySlidingdoor_border} position={[0, 0.229, 18.445]} scale={[3.75, 0.75, 0.75]} />
         {/* ADD SLIDINGDOORLEFT REF */}
         <group ref={entrySlidedoorLeftRef} name="mall_entrySlidedoor-glass_Left" position={[0, 1.236, 18.628]} scale={[3.75, 0.761, 0.75]}>

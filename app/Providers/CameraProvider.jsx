@@ -4,14 +4,16 @@ const CameraContext = createContext(undefined);
 
 export const CameraProvider = ({ children }) => {
   const [activeCamera, setActiveCamera] = useState("entry_Camera");
-
+  const [activateWASDControls,setActivateWASDControls] = useState(false);
 
   useEffect(() => {
-    //console.log("ActiveCamera:", activeCamera);
-  },[activeCamera]);
+    //console.log("activateWASDControls:", activateWASDControls);
+  },[activateWASDControls]);
+
+  const values = { activeCamera, setActiveCamera,activateWASDControls,setActivateWASDControls }
 
   return (
-    <CameraContext.Provider value={{ activeCamera, setActiveCamera }}>
+    <CameraContext.Provider value={values}>
       {children}
     </CameraContext.Provider>
   );

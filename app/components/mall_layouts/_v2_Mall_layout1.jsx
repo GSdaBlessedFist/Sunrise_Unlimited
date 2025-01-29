@@ -155,7 +155,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   // Define a small bounding box representing the camera
   const cameraBoundingBox = new THREE.Box3().setFromCenterAndSize(
     camera.position,
-    new THREE.Vector3(0.5, 4, 0.5) // Adjust these values based on the camera size
+    new THREE.Vector3(0.5, 2, 0.5) // Adjust these values based on the camera size
   );
 
   // Ensure entrance sensor has a valid bounding box
@@ -268,13 +268,13 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <mesh name="Plane001_5" geometry={nodes.Plane001_5.geometry} material={materials.mall_stairs_side} />
         </group>
         {/* REPLACE */}
-        <mesh ref={bigScreenRef} name="mall_bigScreen" geometry={nodes.mall_bigScreen.geometry} material={materials.mall_bigScreen} position={[-7.356, 3.537, 18.399]} rotation={[Math.PI / 2, 0, 0]} scale={[10.567, 7.193, 6.376]} />
-          <mesh ref={plotRef} name="mall_storefront_plot" geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
-            <Suspense fallback={<div>Loading storefronts...</div>}>
-              {loadedComponents.map(({ id, Component, componentPath }) => (
-                <Component key={id} position={plotPositions} />
-              ))}
-            </Suspense>
+          <mesh ref={bigScreenRef} name="mall_bigScreen" geometry={nodes.mall_bigScreen.geometry} material={materials.mall_bigScreen} position={[-7.356, 3.537, 18.399]} rotation={[Math.PI / 2, 0, 0]} scale={[10.567, 7.193, 6.376]} />
+            <mesh ref={plotRef} name="mall_storefront_plot" geometry={nodes.mall_storefront_plot.geometry} material={materials.Mall_storefront_plot} position={[0, 0.001, 0]} />
+              <Suspense fallback={<div>Loading storefronts...</div>}>
+                {loadedComponents.map(({ id, Component, componentPath }) => (
+                  <Component key={id} position={plotPositions} />
+                ))}
+              </Suspense>
         {/* <mesh name="STOREPLACEHOLDER" geometry={nodes.STOREPLACEHOLDER.geometry} material={materials.storefrontplaceholder} position={[0.004, 0.006, 0]} /> */}
         <group name="person-placehlder" position={[-10.935, -1.187, 1.009]} rotation={[Math.PI, -0.531, Math.PI]}>
           <mesh name="human_block001" geometry={nodes.human_block001.geometry} material={materials['storefront_displaycase-baseColor.001']} />
