@@ -192,11 +192,6 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   },[entranceSensorCollision]);
 
 
-  
-  useEffect(() => {
-    const firstFloorBoundingBox = new THREE.Box3().setFromObject(firstFloorRef.current)
-    console.log(firstFloorBoundingBox);
-  },[firstFloorRef.current]);
 
   useEffect(()=>{
     if(!slidingDoorsOpen){
