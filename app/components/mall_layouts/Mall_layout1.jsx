@@ -28,7 +28,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
 
   const plotRef = useRef();
   const [plotPositions,setPlotPositions] = useState([]);
-  const floorRef = useRef();
+  const firstFloorRef = useRef();
   const entranceSensorRef = useRef();
 
   const entryCameraRef = useRef();
@@ -119,7 +119,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
         x: 0,
         y: 1.676,
         // z: 23.356,
-        z: 23,
+        z: 20,
         ease: "power4.out",
         onComplete: () => setTransitionComplete(true),
       });
@@ -148,6 +148,9 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   }, [activeCamera, set, bigScreenCameraRef, bigScreenRef, entryCameraRef]);
   
 
+
+
+
   
   useFrame(() => {
   if (!entranceSensorRef.current) return;
@@ -165,7 +168,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   if (entranceSensorBoundingBox.isEmpty()) {
     entranceSensorBoundingBox.setFromCenterAndSize(
       entranceObject.position,
-      new THREE.Vector3(2, 1, 2) // Adjust these values based on the entrance size
+      new THREE.Vector3(2, 1, .2) // Adjust these values based on the entrance size
     );
   }
 
@@ -173,28 +176,31 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
   const hasCollided = cameraBoundingBox.intersectsBox(entranceSensorBoundingBox);
 
   if (hasCollided && !entranceSensorCollision) {
-    console.log("Camera entered entrance sensor zone");
+    //console.log("Camera entered entrance sensor zone");
     setEntranceSensorCollision(true);
   } else if (!hasCollided && entranceSensorCollision) {
-    console.log("Camera left entrance sensor zone");
+    //console.log("Camera left entrance sensor zone");
     setEntranceSensorCollision(false);
   }
 });
 
-  
-
-
-
+  useEffect(() => {
+    // if(camera && entranceSensorCollision){
+    //   gsap.to(camera,{fov: 75,duration:2})
+    //   camera.updateMatrixWorld()
+    // }
+  },[entranceSensorCollision]);
 
 
   
   useEffect(() => {
-    console.log(entranceSensorCollision)
-  },[entranceSensorCollision]);
+    const firstFloorBoundingBox = new THREE.Box3().setFromObject(firstFloorRef.current)
+    console.log(firstFloorBoundingBox);
+  },[firstFloorRef.current]);
 
   useEffect(()=>{
     if(!slidingDoorsOpen){
-      setIsWASDModalVisible(false)
+      setIsWASDModalVisible(false)      
     }
   },[slidingDoorsOpen]);
 
@@ -212,7 +218,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
     ):null}
     
     {slidingDoorsOpen && (
-      <Html position={[-.25, 3.25, -1]} fullscreen transform={true} distanceFactor={3} className='pointer-events-none relative z-50 drop-shadow-2xl' >
+      <Html position={[0, 2, -1]} fullscreen transform={true} distanceFactor={4} className='pointer-events-none relative z-50 drop-shadow-2xl' >
         <WasdUIModal setActivateWASDControls={setActivateWASDControls}/>
       </Html>
     )}
@@ -257,7 +263,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <primitive object={nodes.Spot.target} position={[0, 0, -1]} />
         </spotLight>
         {/* REPLACE */}
-        <PerspectiveCamera ref={entryCameraRef} name="entry_Camera" makeDefault={activeCamera === "entry_Camera"} far={1000} near={0.1} fov={22.895} position={[0.001, 1.65, 23.286]} rotation={[0.015, 0, 0]} />
+        <PerspectiveCamera ref={entryCameraRef} name="entry_Camera" makeDefault={activeCamera === "entry_Camera"} far={1000} near={0.1} fov={50} position={[0, 1.65, 21.0]} rotation={[0.015, 0, 0]} />
         <PerspectiveCamera ref={bigScreenCameraRef} name="big-screens_Camera" makeDefault={activeCamera === "big-screens_Camera"} far={1000} near={0.1} fov={32.269} position={[-10.889, -0.406, 1.278]} rotation={[2.99, -0.363, 3.124]} />
         <group name="stairs">
           <mesh name="Plane001" geometry={nodes.Plane001.geometry} material={materials.mall_stair_basic} />
@@ -304,7 +310,7 @@ export default function Mall_Layout1({enterLayout,storefronts, ...props }) {
           <mesh name="Mesh003_5" geometry={nodes.Mesh003_5.geometry} material={materials['mall_rail_flourescent-third']} />
           <mesh name="Mesh003_6" geometry={nodes.Mesh003_6.geometry} material={materials.mall_post} />
         </group>
-        <group name="mall_floor_firstFloor">
+        <group ref={firstFloorRef} name="mall_floor_firstFloor">
           <mesh name="mall_floor_main" geometry={nodes.mall_floor_main.geometry} material={materials.mall_floor_basic} />
           <mesh name="mall_floor_main_1" geometry={nodes.mall_floor_main_1.geometry} material={materials.mall_floor_sides} />
         </group>

@@ -2,8 +2,8 @@
 
 
 .actionMarker{
-    @apply w-40 h-40 flex justify-center items-center border-4 bg-transparent hover:bg-white/20 rounded-full p-2;
+    @apply w-64 h-64 flex justify-center items-center border-4 bg-transparent hover:bg-white/20 rounded-full p-2;
 }
 .actionMarkerContent{
-    @apply text-center font-semibold text-xl text-white;
+    @apply text-center font-semibold text-4xl text-white;
 }
